@@ -22,16 +22,25 @@ persi <- filter(doi_clean, Dog == "Persi")
 madi$rep_total <- seq(1, length.out = nrow(madi))
 persi$rep_total <- seq(1, length.out = nrow(persi))
 
+# remove rows (training reps) where there was no opportunity
+# for false alert
+#STILL WORKING HERE, COME BACK HERE :)
+no_ds_available_persi <- which(persi$Number.False.Alerts == "n/a")
+no_ds_available_persi
+persi <- persi[-no_ds_available_persi, ]
+
+no_ds_available_madi <- which(madi$Number.False.Alerts == "n/a")
+rows_to_remove_madi
+madi <- madi[-no_ds_available_madi, ]
 library(ggplot2)
-
-
-
 
 # Assuming your dataframe is named df and you want to plot columns
 # "rep.total" and another column (e.g., "some_other_column")
-ggplot(persi, aes(x = seq_along(rep.total), y = Number.False.Alerts)) +
+ggplot(persi, aes(x = seq_along(rep_total), y = Number.False.Alerts)) +
   geom_point() +
-  labs(title = "Line Graph Example", x = "Index", y = "rep.total")
+  labs(title = "Persi False Alerts Over Time",
+       x = "Repetition Number",
+       y = "Number of False Alerts")
 
 # will want to remove the lines with n/a - not just the n/a, but
 # the whole repetition. Talk about it in text.

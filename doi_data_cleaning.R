@@ -24,13 +24,12 @@ persi$rep_total <- seq(1, length.out = nrow(persi))
 
 # remove rows (training reps) where there was no opportunity
 # for false alert
-#STILL WORKING HERE, COME BACK HERE :)
 no_ds_available_persi <- which(persi$Number.False.Alerts == "n/a")
 no_ds_available_persi
 persi <- persi[-no_ds_available_persi, ]
 
 no_ds_available_madi <- which(madi$Number.False.Alerts == "n/a")
-rows_to_remove_madi
+no_ds_available_madi
 madi <- madi[-no_ds_available_madi, ]
 library(ggplot2)
 

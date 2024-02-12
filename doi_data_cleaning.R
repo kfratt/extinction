@@ -33,8 +33,7 @@ no_ds_available_madi
 madi <- madi[-no_ds_available_madi, ]
 library(ggplot2)
 
-# Assuming your dataframe is named df and you want to plot columns
-# "rep.total" and another column (e.g., "some_other_column")
+# make a plot
 ggplot(persi, aes(x = seq_along(rep_total), y = Number.False.Alerts)) +
   geom_point() +
   labs(title = "Persi False Alerts Over Time",
@@ -43,3 +42,4 @@ ggplot(persi, aes(x = seq_along(rep_total), y = Number.False.Alerts)) +
 
 # will want to remove the lines with n/a - not just the n/a, but
 # the whole repetition. Talk about it in text.
+

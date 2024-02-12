@@ -1,3 +1,6 @@
+rm(list=ls())
+graphics.off()
+
 setwd("/Users/kaylafratt/Desktop/DOI Paper Data")
 library(tidyverse)
 
@@ -43,3 +46,6 @@ ggplot(persi, aes(x = seq_along(rep_total), y = Number.False.Alerts)) +
 # will want to remove the lines with n/a - not just the n/a, but
 # the whole repetition. Talk about it in text.
 
+
+
+p

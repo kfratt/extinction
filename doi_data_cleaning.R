@@ -8,7 +8,7 @@ library(tidyverse)
 # remove x's for n/as, and removed sessions for June 7 onwards.
 # June 8-16 training was focused on generalizing the DOI, not actual extinction.
 
-setwd("C:/Documents/K9C/DOI Paper")
+#setwd("C:/Documents/K9C/DOI Paper")
 doi_clean <- read.csv("doi_data_clean.csv")
 library(tidyverse)
 library(dplyr)
@@ -57,16 +57,38 @@ library(ggplot2)
 ?ggplot
 ggplot(persi, aes(x = rep_total, y = Number.False.Alerts)) +
   geom_col (fill = "skyblue") +
-labs(title = "Persi False Alerts Over Time (Repitions)", x = "Repetition #", y = "# False Alerts")
+labs(title = "Persi False Alerts Over Time (Repetitions)", x = "Repetition #", y = "# False Alerts")
 
 ggplot(persi, aes(x = rep_total, y = FA1..s.)) +
   geom_col (fill = "skyblue") +
-  labs(title = "Persi False Alerts Over Time (Repitions)", x = "Repetition #", y = "False Alert 1 Duration")
+  labs(title = "Persi False Alerts Over Time (Repetitions)", x = "Repetition #", y = "False Alert 1 Duration")
 
 
 
 # Add sum of all false alerts for each repetition
-#Sum across rows to create new column
-#Work in progress
-?rowSums()
-madi$totalduration = rowSums(madi[, c("FA1..s.", "FA2..s.", "FA3..s.", "FA4..s.", "FA5..s.", "FA6..s.", "FA7..s.", "FA8..s.", na.rm = TRUE)
+# Sum across rows to create new column
+# Work in progress, kayla commented out to figure out her stuff below
+#?rowSums()
+#madi$totalduration = rowSums(madi[, c("FA1..s.", "FA2..s.", "FA3..s.", "FA4..s.", "FA5..s.", "FA6..s.", "FA7..s.", "FA8..s.", na.rm = TRUE)
+
+
+# Kayla finding average number of repetitions per session
+# first create a new column for session number
+doi_clean$session <- NA
+
+# create new variable
+counter <- 0
+
+# assign values based on repetition resets
+for (i in 1:length(doi_clean$session)) {
+  if (doi_clean$Rep.Number[i] == 1) {
+    counter <- counter + 1
+  }
+  doi_clean$session[i] <- counter
+}
+
+ # count number of repetitions within a session
+reps_by_session <- count(doi_clean, session, name = "reps")
+
+# get summary stats
+summary(reps_by_session)

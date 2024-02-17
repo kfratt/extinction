@@ -8,13 +8,21 @@ library(tidyverse)
 # remove x's for n/as, and removed sessions for June 7 onwards.
 # June 8-16 training was focused on generalizing the DOI, not actual extinction.
 
+setwd("C:/Documents/K9C/DOI Paper")
 doi_clean <- read.csv("doi_data_clean.csv")
-class(doi_clean$Date)
+library(tidyverse)
+library(dplyr)
 
 #coercing Date column to date
 doi_clean$Date <- as.Date(doi_clean$Date, format = "%m/%d/%Y")
 class(doi_clean$Date)
 class(doi_clean$Dog)
+
+#coerce false alerts, correct dismissals, misses to numeric
+doi_clean$Number.False.Alerts <- as.numeric(doi_clean$Number.False.Alerts)
+doi_clean$X..of.correct.dismissals <- as.numeric(doi_clean$X..of.correct.dismissals)
+doi_clean$X..of.misses <- as.numeric(doi_clean$X..of.misses)
+
 
 # split into two dataframes based on dog learner
 library(dplyr)
@@ -25,27 +33,40 @@ persi <- filter(doi_clean, Dog == "Persi")
 madi$rep_total <- seq(1, length.out = nrow(madi))
 persi$rep_total <- seq(1, length.out = nrow(persi))
 
-# remove rows (training reps) where there was no opportunity
-# for false alert
-no_ds_available_persi <- which(persi$Number.False.Alerts == "n/a")
-no_ds_available_persi
-persi <- persi[-no_ds_available_persi, ]
+# remove row with nulls
+madi <- filter(madi, Number.True.Alerts != "NA")
+persi <- filter(persi, Number.True.Alerts != "NA")
 
-no_ds_available_madi <- which(madi$Number.False.Alerts == "n/a")
-no_ds_available_madi
-madi <- madi[-no_ds_available_madi, ]
-library(ggplot2)
+# remove rows (training reps) where there was no opportunity
+# for false alert (no negatives available)
+madi <- filter(madi, Negative.1 != "none")
+persi <- filter(persi, Negative.1 != "none")
+
+# remove rows (training reps) where there was no opportunity
+# for true alert (no cheetah available)
+madi <- filter(madi, Cheetah != "none")
+persi <- filter(persi, Cheetah != "none")
+
+
+######################################################################
+############Data exploration##########################################
+
 
 # make a plot
-ggplot(persi, aes(x = seq_along(rep_total), y = Number.False.Alerts)) +
-  geom_point() +
-  labs(title = "Persi False Alerts Over Time",
-       x = "Repetition Number",
-       y = "Number of False Alerts")
+library(ggplot2)
+?ggplot
+ggplot(persi, aes(x = rep_total, y = Number.False.Alerts)) +
+  geom_col (fill = "skyblue") +
+labs(title = "Persi False Alerts Over Time (Repitions)", x = "Repetition #", y = "# False Alerts")
 
-# will want to remove the lines with n/a - not just the n/a, but
-# the whole repetition. Talk about it in text.
+ggplot(persi, aes(x = rep_total, y = FA1..s.)) +
+  geom_col (fill = "skyblue") +
+  labs(title = "Persi False Alerts Over Time (Repitions)", x = "Repetition #", y = "False Alert 1 Duration")
 
 
 
-p
+# Add sum of all false alerts for each repetition
+#Sum across rows to create new column
+#Work in progress
+?rowSums()
+madi$totalduration = rowSums(madi[, c("FA1..s.", "FA2..s.", "FA3..s.", "FA4..s.", "FA5..s.", "FA6..s.", "FA7..s.", "FA8..s.", na.rm = TRUE)

@@ -57,6 +57,11 @@ persi <- persi %>%
 ######################################################################
 ############Data exploration##########################################
 
+#correlation tests
+cor.test(madi$rep_total, madi$Number.False.Alerts)
+cor.test(madi$rep_total, madi$FAduration)
+cor.test(persi$rep_total, persi$Number.False.Alerts)
+cor.test(persi$rep_total, persi$FAduration)
 
 #Plots Persi number of false alerts and sum duration of false alerts
 library(ggplot2)

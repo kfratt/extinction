@@ -8,7 +8,7 @@ library(tidyverse)
 # remove x's for n/as, and removed sessions for June 7 onwards.
 # June 8-16 training was focused on generalizing the DOI, not actual extinction.
 
-setwd("C:/Documents/K9C/DOI Paper")
+#setwd("C:/Documents/K9C/DOI Paper")
 doi_clean <- read.csv("doi_data_clean.csv")
 library(tidyverse)
 library(dplyr)
@@ -114,7 +114,9 @@ reps_by_session <- count(doi_clean, session, name = "reps")
 summary(reps_by_session)
 
 #Here's another way -RH
+#This gets a slightly different answer because we had a few days where the dogs had more than 1 session per date - KF
 result <- madi %>%
   group_by(Date) %>%
   summarize(AverageValue = mean(Rep.Number, na.rm = TRUE))
 mean(result$AverageValue)
+

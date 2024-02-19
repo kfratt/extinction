@@ -31,7 +31,8 @@ In order to measure this, we needed to video all training sessions with the dogs
 
 ## Playing Around for Class
 
-Here's a test equation. $$ y = x^2 + n_x $$
+Here's a test equation. 
+$$ y = x^2 + n_x $$
 
 A test figure. 
 

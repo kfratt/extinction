@@ -1,17 +1,18 @@
 rm(list=ls())
 graphics.off()
 
-setwd("/Users/kaylafratt/Desktop/DOI Paper Data")
-library(tidyverse)
+#setwd("/Users/kaylafratt/Desktop/DOI Paper Data")
+#library(tidyverse)
 
 # manually cleaned data to move notes into separate column, fixed typos,
 # remove x's for n/as, and removed sessions for June 7 onwards.
 # June 8-16 training was focused on generalizing the DOI, not actual extinction.
 
-#setwd("C:/Documents/K9C/DOI Paper")
+setwd("C:/Documents/K9C/DOI Paper")
 doi_clean <- read.csv("doi_data_clean.csv")
 library(tidyverse)
 library(dplyr)
+library(tidyr)
 
 #coercing Date column to date
 doi_clean$Date <- as.Date(doi_clean$Date, format = "%m/%d/%Y")
@@ -52,16 +53,6 @@ madi <- madi %>%
 persi <- persi %>%
   mutate(FAduration = rowSums(select(., FA1..s.:FA8..s.), na.rm = TRUE))
 
-##### Limitation: duration was measured for false alerts but not true alerts
-###Break false alerts down so that each false alert is its own record with its own single duration
-###How many true alerts happened without a false alert before it
-###On any day, how does first, second, etc. false alerts impact others. ex on a day with 5 false alerts does duration decrease more than on a day with 2 false alerts
-  #Bar chart - create ID of date and FA1, date and FA2, atc
-  #Each day is a time scale - looking at memory consolidation (latent learning)
-  #How does one days events affect the next day
-#Within subjects test
-#Should check in
-#Collect data on people in course. Be able to observe issues common within each breed
 
 
 ######################################################################
@@ -103,6 +94,76 @@ ggplot(doi_clean, aes(x = Negative.1, y = Number.False.Alerts)) +
 
 
 
+##### Limitation: duration was measured for false alerts but not true alerts
+###Break false alerts down so that each false alert is its own record with its own single duration
+###How many true alerts happened without a false alert before it
+###On any day, how does first, second, etc. false alerts impact others. ex on a day with 5 false alerts does duration decrease more than on a day with 2 false alerts
+#Bar chart - create ID of date and FA1, date and FA2, atc
+#Each day is a time scale - looking at memory consolidation (latent learning)
+#How does one days events affect the next day
+#Within subjects test
+#Should check in
+#Collect data on people in course. Be able to observe issues common within each breed
+
+
+#Create new datasets that break each FA into their own record. Unique ID = date + FA#
+#Madi
+# Exclude specified columns before reshaping
+madi_filtered <- madi[, !grepl("^FAduration$|^Number.True.Alerts$|^Number.False.Alerts$|^X..of.correct.dismissals$|^X..of.misses$", colnames(madi))]
+
+
+# Reshape the dataframe using pivot_longer
+madi_falses <- pivot_longer(madi_filtered, 
+                              cols = starts_with("FA"), 
+                              names_to = "FA", 
+                              values_to = "FA_time")
+
+# Replace NA values in FA_time with 0 where FA is FA1..s.
+madi_falses$FA_time[madi_falses$FA == "FA1..s." & is.na(madi_falses$FA_time)] <- 0
+
+# Remove rows where FA_time is NA
+madi_falses <- madi_falses[complete.cases(madi_falses), ]
+
+madi_falses$FA <- gsub("FA", "", madi_falses$FA)
+madi_falses$FA <- gsub("\\.\\.s\\.$", "", madi_falses$FA)
+madi_falses$FA <- as.numeric(madi_falses$FA)
+
+
+#Persi
+# Exclude specified columns before reshaping
+persi_filtered <- persi[, !grepl("^FAduration$|^Number.True.Alerts$|^Number.False.Alerts$|^X..of.correct.dismissals$|^X..of.misses$", colnames(persi))]
+
+# Reshape the dataframe using pivot_longer
+persi_falses <- pivot_longer(persi_filtered, 
+                             cols = starts_with("FA"), 
+                             names_to = "FA", 
+                             values_to = "FA_time")
+
+# Replace NA values in FA_time with 0 where FA is FA1..s.
+persi_falses$FA_time[persi_falses$FA == "FA1..s." & is.na(persi_falses$FA_time)] <- 0
+
+# Remove rows where FA_time is NA
+persi_falses <- persi_falses[complete.cases(persi_falses), ]
+
+# Change values in the FA column
+persi_falses$FA <- gsub("FA", "", persi_falses$FA)
+persi_falses$FA <- gsub("\\.\\.s\\.$", "", persi_falses$FA)
+persi_falses$FA <- as.numeric(persi_falses$FA)
+
+#Remove filtered tables to keep data environment cleaner
+rm(madi_filtered)
+rm(persi_filtered)
+
+
+
+
+
+#####################################################################################
+#########Explore falses data#########################################################
+
+
+
+
 
 
 # Kayla finding average number of repetitions per session
@@ -132,4 +193,3 @@ result <- madi %>%
   group_by(Date) %>%
   summarize(AverageValue = mean(Rep.Number, na.rm = TRUE))
 mean(result$AverageValue)
-

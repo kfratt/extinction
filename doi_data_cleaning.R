@@ -52,6 +52,16 @@ madi <- madi %>%
 persi <- persi %>%
   mutate(FAduration = rowSums(select(., FA1..s.:FA8..s.), na.rm = TRUE))
 
+##### Limitation: duration was measured for false alerts but not true alerts
+###Break false alerts down so that each false alert is its own record with its own single duration
+###How many true alerts happened without a false alert before it
+###On any day, how does first, second, etc. false alerts impact others. ex on a day with 5 false alerts does duration decrease more than on a day with 2 false alerts
+  #Bar chart - create ID of date and FA1, date and FA2, atc
+  #Each day is a time scale - looking at memory consolidation (latent learning)
+  #How does one days events affect the next day
+#Within subjects test
+#Should check in
+#Collect data on people in course. Be able to observe issues common within each breed
 
 
 ######################################################################
@@ -73,6 +83,9 @@ ggplot(persi, aes(x = rep_total, y = FAduration)) +
   geom_col (fill = "skyblue") +
   labs(title = "Persi False Alerts Over Time (Repetitions)", x = "Repetition #", y = "False Alert Duration")
 
+ggplot(persi, aes(x = Number.False.Alerts, y = FAduration)) +
+  geom_col (fill = "skyblue") +
+  labs(title = "Persi False Alerts Over Time (Repetitions)", x = "Repetition #", y = "False Alert Duration")
 
 #Plots Madi number of false alerts and sum duration of false alerts
 ggplot(madi, aes(x = rep_total, y = Number.False.Alerts)) +

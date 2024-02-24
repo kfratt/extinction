@@ -13,6 +13,7 @@ doi_clean <- read.csv("doi_data_clean.csv")
 library(tidyverse)
 library(dplyr)
 library(tidyr)
+library(ggplot2)
 
 #coercing Date column to date
 doi_clean$Date <- as.Date(doi_clean$Date, format = "%m/%d/%Y")
@@ -93,12 +94,12 @@ ggplot(doi_clean, aes(x = Negative.1, y = Number.False.Alerts)) +
   labs(title = "Number of False Alerts Per Negative Sample", x = "Sample", y = "Number of False Alerts")
 
 
-
+#####################Ideas from Hammer###############################################
 ##### Limitation: duration was measured for false alerts but not true alerts
 ###Break false alerts down so that each false alert is its own record with its own single duration
 ###How many true alerts happened without a false alert before it
 ###On any day, how does first, second, etc. false alerts impact others. ex on a day with 5 false alerts does duration decrease more than on a day with 2 false alerts
-#Bar chart - create ID of date and FA1, date and FA2, atc
+#Bar chart - create ID of date and FA1, date and FA2, etc
 #Each day is a time scale - looking at memory consolidation (latent learning)
 #How does one days events affect the next day
 #Within subjects test
@@ -160,6 +161,29 @@ rm(persi_filtered)
 
 #####################################################################################
 #########Explore falses data#########################################################
+#How many true alerts happened without a false alert before it
+#On any day, how does first, second, etc. false alerts impact others. ex on a day with 5 false alerts does duration decrease more than on a day with 2 false alerts
+#Bar chart - create ID of date and FA1, date and FA2, etc
+#Each day is a time scale - looking at memory consolidation (latent learning)
+#How does one days events affect the next day
+
+#Add new column to _falses where value is 1 if that repetition was completed without any false alerts, 0 for any false alerts
+madi_falses <- madi_falses %>%
+  mutate(no_false = ifelse(FA_time == 0, 1, 0))
+
+install.packages("writexl")
+library(writexl)
+
+# Assuming your data frame is called 'madi_falses' and you want to export it to a file named 'output.xlsx'
+write_xlsx(madi_falses, "output.xlsx")
+
+
+
+
+
+
+
+
 
 
 

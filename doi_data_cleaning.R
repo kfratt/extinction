@@ -73,7 +73,8 @@ labs(title = "Persi False Alerts Over Time (Repetitions)", x = "Repetition #", y
 
 ggplot(persi, aes(x = rep_total, y = FAduration)) +
   geom_col (fill = "skyblue") +
-  labs(title = "Persi False Alerts Over Time (Repetitions)", x = "Repetition #", y = "False Alert Duration")
+  labs(title = "Persi False Alert Duration Over Time (Repetitions)", x = "Repetition #", y = "False Alert Duration, Sum for Repetition")+
+  ylim(0, 115)
 
 ggplot(persi, aes(x = Number.False.Alerts, y = FAduration)) +
   geom_col (fill = "skyblue") +
@@ -86,7 +87,8 @@ ggplot(madi, aes(x = rep_total, y = Number.False.Alerts)) +
 
 ggplot(madi, aes(x = rep_total, y = FAduration)) +
   geom_col (fill = "skyblue") +
-  labs(title = "Madi False Alerts Over Time (Repetitions)", x = "Repetition #", y = "False Alert Duration")
+  labs(title = "Madi False Alert Duration Over Time (Repetitions)", x = "Repetition #", y = "False Alert Duration, Sum for Repetition")+
+  ylim(0, 600)
 
 #Number False Alerts per Negative Sample
 ggplot(doi_clean, aes(x = Negative.1, y = Number.False.Alerts)) +
@@ -151,6 +153,17 @@ persi_falses$FA <- gsub("FA", "", persi_falses$FA)
 persi_falses$FA <- gsub("\\.\\.s\\.$", "", persi_falses$FA)
 persi_falses$FA <- as.numeric(persi_falses$FA)
 
+#Add new column to where value is 1 if that repetition was completed without any false alerts, 0 when false alerts were recorded.
+madi_falses <- madi_falses %>%
+  mutate(no_false = ifelse(FA_time == 0, 1, 0))
+persi_falses <- persi_falses %>%
+  mutate(no_false = ifelse(FA_time == 0, 1, 0))
+
+#Add numbers for unique false alert identifiers
+madi_falses$false_id <- seq(from = 1, to = nrow(madi_falses))
+persi_falses$false_id <- seq(from = 1, to = nrow(persi_falses))
+
+
 #Remove filtered tables to keep data environment cleaner
 rm(madi_filtered)
 rm(persi_filtered)
@@ -167,18 +180,27 @@ rm(persi_filtered)
 #Each day is a time scale - looking at memory consolidation (latent learning)
 #How does one days events affect the next day
 
-#Add new column to _falses where value is 1 if that repetition was completed without any false alerts, 0 for any false alerts
-madi_falses <- madi_falses %>%
-  mutate(no_false = ifelse(FA_time == 0, 1, 0))
-
-install.packages("writexl")
-library(writexl)
-
-# Assuming your data frame is called 'madi_falses' and you want to export it to a file named 'output.xlsx'
-write_xlsx(madi_falses, "output.xlsx")
 
 
+ggplot(persi_falses, aes(x = false_id, y = FA_time)) +
+  geom_col (fill = "skyblue") +
+  labs(title = "Persi False Alert Duration Over Time (Repetitions)", x = "False alert #", y = "False Alert Duration, per Individual False Alert")+
+  ylim(0, 115)
 
+ggplot(persi, aes(x = rep_total, y = FAduration)) +
+  geom_col (fill = "skyblue") +
+  labs(title = "Persi False Alerts Over Time (Repetitions)", x = "Repetition #", y = "False Alert Duration")
+
+
+ggplot(madi_falses, aes(x = false_id, y = FA_time)) +
+  geom_col (fill = "skyblue") +
+  labs(title = "Madi False Alerts Over Time (Repetitions)", x = "False alert #", y = "False Alert Duration, per Individual False Alert")+
+  ylim(0, 600)
+
+ggplot(madi, aes(x = rep_total, y = FAduration)) +
+  geom_col (fill = "skyblue") +
+  labs(title = "Madi False Alert Duration Over Time (Repetitions)", x = "Repetition #", y = "False Alert Duration, Sum for Repetition")+
+  ylim(0, 600)
 
 
 

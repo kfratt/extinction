@@ -25,7 +25,6 @@ doi_clean$Number.False.Alerts <- as.numeric(doi_clean$Number.False.Alerts)
 doi_clean$X..of.correct.dismissals <- as.numeric(doi_clean$X..of.correct.dismissals)
 doi_clean$X..of.misses <- as.numeric(doi_clean$X..of.misses)
 
-
 # split into two dataframes based on dog learner
 madi <- filter(doi_clean, Dog == "Madi")
 persi <- filter(doi_clean, Dog == "Persi")
@@ -53,47 +52,6 @@ madi <- madi %>%
   mutate(FAduration = rowSums(select(., FA1..s.:FA8..s.), na.rm = TRUE))
 persi <- persi %>%
   mutate(FAduration = rowSums(select(., FA1..s.:FA8..s.), na.rm = TRUE))
-
-
-
-######################################################################
-############Data exploration##########################################
-
-#correlation tests
-cor.test(madi$rep_total, madi$Number.False.Alerts)
-cor.test(madi$rep_total, madi$FAduration)
-cor.test(persi$rep_total, persi$Number.False.Alerts)
-cor.test(persi$rep_total, persi$FAduration)
-
-#Plots Persi number of false alerts and sum duration of false alerts
-library(ggplot2)
-ggplot(persi, aes(x = rep_total, y = Number.False.Alerts)) +
-  geom_col (fill = "skyblue") +
-labs(title = "Persi False Alerts Over Time (Repetitions)", x = "Repetition #", y = "# False Alerts")
-
-ggplot(persi, aes(x = rep_total, y = FAduration)) +
-  geom_col (fill = "skyblue") +
-  labs(title = "Persi False Alert Duration Over Time (Repetitions)", x = "Repetition #", y = "False Alert Duration, Sum for Repetition")+
-  ylim(0, 115)
-
-ggplot(persi, aes(x = Number.False.Alerts, y = FAduration)) +
-  geom_col (fill = "skyblue") +
-  labs(title = "Persi False Alerts Over Time (Repetitions)", x = "Repetition #", y = "False Alert Duration")
-
-#Plots Madi number of false alerts and sum duration of false alerts
-ggplot(madi, aes(x = rep_total, y = Number.False.Alerts)) +
-  geom_col (fill = "skyblue") +
-  labs(title = "Madi False Alerts Over Time (Repetitions)", x = "Repetition #", y = "# False Alerts")
-
-ggplot(madi, aes(x = rep_total, y = FAduration)) +
-  geom_col (fill = "skyblue") +
-  labs(title = "Madi False Alert Duration Over Time (Repetitions)", x = "Repetition #", y = "False Alert Duration, Sum for Repetition")+
-  ylim(0, 600)
-
-#Number False Alerts per Negative Sample
-ggplot(doi_clean, aes(x = Negative.1, y = Number.False.Alerts)) +
-  geom_col (fill = "skyblue") +
-  labs(title = "Number of False Alerts Per Negative Sample", x = "Sample", y = "Number of False Alerts")
 
 
 #####################Ideas from Hammer###############################################
@@ -171,42 +129,125 @@ rm(persi_filtered)
 
 
 
+#Each day is a time scale - looking at memory consolidation
+madi_date <- madi_falses %>%
+  group_by(Date) %>%
+  summarise(
+    repetitions = max(Rep.Number),
+    FA_duration = sum(FA_time),
+    num_false_alerts = sum(ifelse(no_false == 1, 0, 1))
+  )
+madi_date$falseperrep <- madi_date$num_false_alerts / madi_date$repetitions
+madi_date$day <- seq_len(nrow(madi_date))
 
-#####################################################################################
-#########Explore falses data#########################################################
-#How many true alerts happened without a false alert before it
-#On any day, how does first, second, etc. false alerts impact others. ex on a day with 5 false alerts does duration decrease more than on a day with 2 false alerts
-#Bar chart - create ID of date and FA1, date and FA2, etc
-#Each day is a time scale - looking at memory consolidation (latent learning)
-#How does one days events affect the next day
+
+persi_date <- persi_falses %>%
+  group_by(Date) %>%
+  summarise(
+    repetitions = max(Rep.Number),
+    FA_duration = sum(FA_time),
+    num_false_alerts = sum(ifelse(no_false == 1, 0, 1))
+  )
+persi_date$falseperrep <- persi_date$num_false_alerts / persi_date$repetitions
+persi_date$day <- seq_len(nrow(persi_date))
 
 
 
-ggplot(persi_falses, aes(x = false_id, y = FA_time)) +
+
+###################################################################################
+#########################Visualizations############################################
+#correlation tests
+cor.test(madi$rep_total, madi$Number.False.Alerts)
+cor.test(madi$rep_total, madi$FAduration)
+cor.test(persi$rep_total, persi$Number.False.Alerts)
+cor.test(persi$rep_total, persi$FAduration)
+
+#Plots Persi number of false alerts and sum duration of false alerts
+library(ggplot2)
+plot1 <- ggplot(persi, aes(x = rep_total, y = Number.False.Alerts)) +
   geom_col (fill = "skyblue") +
-  labs(title = "Persi False Alert Duration Over Time (Repetitions)", x = "False alert #", y = "False Alert Duration, per Individual False Alert")+
+  labs(title = "Persi False Alerts Over Time (Repetitions)", x = "Repetition #", y = "# False Alerts")+
+  xlim(0, 150)
+
+plot2 <- ggplot(persi, aes(x = rep_total, y = FAduration)) +
+  geom_col (fill = "skyblue") +
+  labs(title = "Persi False Alert Duration Over Time (Repetitions)", x = "Repetition #", y = "False Alert Duration, Sum for Repetition")+
+  xlim(0, 150)+ 
   ylim(0, 115)
 
-ggplot(persi, aes(x = rep_total, y = FAduration)) +
+
+#Plots Madi number of false alerts and sum duration of false alerts
+plot4 <- ggplot(madi, aes(x = rep_total, y = Number.False.Alerts)) +
   geom_col (fill = "skyblue") +
-  labs(title = "Persi False Alerts Over Time (Repetitions)", x = "Repetition #", y = "False Alert Duration")
+  labs(title = "Madi False Alerts Over Time (Repetitions)", x = "Repetition #", y = "# False Alerts")
 
-
-ggplot(madi_falses, aes(x = false_id, y = FA_time)) +
-  geom_col (fill = "skyblue") +
-  labs(title = "Madi False Alerts Over Time (Repetitions)", x = "False alert #", y = "False Alert Duration, per Individual False Alert")+
-  ylim(0, 600)
-
-ggplot(madi, aes(x = rep_total, y = FAduration)) +
+plot5 <- ggplot(madi, aes(x = rep_total, y = FAduration)) +
   geom_col (fill = "skyblue") +
   labs(title = "Madi False Alert Duration Over Time (Repetitions)", x = "Repetition #", y = "False Alert Duration, Sum for Repetition")+
   ylim(0, 600)
 
+#Number False Alerts per Negative Sample
+ggplot(doi_clean, aes(x = Negative.1, y = Number.False.Alerts)) +
+  geom_col (fill = "skyblue") +
+  labs(title = "Number of False Alerts Per Negative Sample", x = "Sample", y = "Number of False Alerts")
+
+#########Explore falses data#########################################################
+#How many true alerts happened without a false alert before it
+#On any day, how does first, second, etc. false alerts impact others. ex on a day with 5 false alerts does duration decrease more than on a day with 2 false alerts
+#Bar chart - create ID of date and FA1, date and FA2, etc
+#How does one days events affect the next day
 
 
+plot3 <- ggplot(persi_falses, aes(x = false_id, y = FA_time)) +
+  geom_col (fill = "skyblue") +
+  labs(title = "Persi False Alert Duration Over Time (Repetitions)", x = "False alert #", y = "False Alert Duration, per Individual False Alert")+
+  ylim(0, 115)
+
+plot6 <- ggplot(madi_falses, aes(x = false_id, y = FA_time)) +
+  geom_col (fill = "skyblue") +
+  labs(title = "Madi False Alerts Over Time (Repetitions)", x = "False alert #", y = "False Alert Duration, per Individual False Alert")+
+  ylim(0, 600)
+
+#Put above 6 charts into one grid
+install.packages("gridExtra")
+library(gridExtra)
+grid.arrange(plot1, plot2, plot3, plot4, plot5, plot6, nrow = 2, ncol = 3)
+
+###Data by date
+#Madi
+ggplot(madi_date, aes(x = Date, y = falseperrep)) +
+  geom_col (fill = "skyblue") +
+  labs(title = "Average Number of False Alerts per Repetition", x = "Date", y = "Sum False Alerts/Number of Reps")
+
+ggplot(madi_date, aes(x = Date, y = FA_duration)) +
+  geom_col (fill = "skyblue") +
+  labs(title = "Sum of False Alert Duration per Day", x = "Date", y = "False Alert Duration (seconds)")
+
+ggplot(madi_date, aes(x = day, y = falseperrep)) +
+  geom_col (fill = "skyblue") +
+  labs(title = "Average Number of False Alerts per Repetition", x = "Day Number", y = "Sum False Alerts/Number of Reps")
+
+ggplot(madi_date, aes(x = day, y = FA_duration)) +
+  geom_col (fill = "skyblue") +
+  labs(title = "Sum of False Alert Duration per Day", x = "Day Number", y = "False Alert Duration (seconds)")
 
 
+#Persi
+ggplot(persi_date, aes(x = Date, y = falseperrep)) +
+  geom_col (fill = "skyblue") +
+  labs(title = "Average Number of False Alerts per Repetition", x = "Date", y = "Sum False Alerts/Number of Reps")
 
+ggplot(persi_date, aes(x = Date, y = FA_duration)) +
+  geom_col (fill = "skyblue") +
+  labs(title = "Sum of False Alert Duration per Day", x = "Date", y = "False Alert Duration (seconds)")
+
+ggplot(persi_date, aes(x = day, y = falseperrep)) +
+  geom_col (fill = "skyblue") +
+  labs(title = "Average Number of False Alerts per Repetition", x = "Day Number", y = "Sum False Alerts/Number of Reps")
+
+ggplot(persi_date, aes(x = day, y = FA_duration)) +
+  geom_col (fill = "skyblue") +
+  labs(title = "Sum of False Alert Duration per Day", x = "Day Number", y = "False Alert Duration (seconds)")
 
 
 

@@ -249,6 +249,17 @@ ggplot(persi_date, aes(x = day, y = FA_duration)) +
   geom_col (fill = "skyblue") +
   labs(title = "Sum of False Alert Duration per Day", x = "Day Number", y = "False Alert Duration (seconds)")
 
+#######Poisson model#################################
+#I don't think a poisson fits due to independence; given subjects are learning over time, each event affects the likelihood of other events.
+
+# Fit a Poisson regression model
+poisson_model <- glm(falseperrep ~ day, data = madi_date, family = "poisson")
+
+# Summary of the Poisson regression model
+summary(poisson_model)
+
+# Predictions from the Poisson regression model
+predictions <- predict(poisson_model, type = "response")
 
 
 

@@ -67,7 +67,7 @@ persi <- persi %>%
 #Collect data on people in course. Be able to observe issues common within each breed
 
 
-#Create new datasets that break each FA into their own record. Unique ID = date + FA#
+#Create new datasets that break each FA into their own record
 #Madi
 # Exclude specified columns before reshaping
 madi_filtered <- madi[, !grepl("^FAduration$|^Number.True.Alerts$|^Number.False.Alerts$|^X..of.correct.dismissals$|^X..of.misses$", colnames(madi))]
@@ -129,7 +129,7 @@ rm(persi_filtered)
 
 
 
-#Each day is a time scale - looking at memory consolidation
+###Each day is a time scale - looking at memory consolidation#####################
 madi_date <- madi_falses %>%
   group_by(Date) %>%
   summarise(
@@ -151,7 +151,21 @@ persi_date <- persi_falses %>%
 persi_date$falseperrep <- persi_date$num_false_alerts / persi_date$repetitions
 persi_date$day <- seq_len(nrow(persi_date))
 
+#######Add misses to _date dataframes
+madi_misses <- madi %>%
+  group_by(Date) %>%
+  summarise(misses = sum(X..of.misses, na.rm = TRUE))
 
+madi_date <- merge(madi_date, madi_misses, by = "Date", all.x = TRUE)
+
+persi_misses <- persi %>%
+  group_by(Date) %>%
+  summarise(misses = sum(X..of.misses, na.rm = TRUE))
+
+persi_date <- merge(persi_date, persi_misses, by = "Date", all.x = TRUE)
+
+rm(madi_misses)
+rm(persi_misses)
 
 
 ###################################################################################
@@ -167,29 +181,30 @@ library(ggplot2)
 plot1 <- ggplot(persi, aes(x = rep_total, y = Number.False.Alerts)) +
   geom_col (fill = "skyblue") +
   labs(title = "Persi False Alerts Over Time (Repetitions)", x = "Repetition #", y = "# False Alerts")+
-  xlim(0, 150)
+  xlim(0, 150) +
+  ylim(0, 10) + theme_classic()
 
 plot2 <- ggplot(persi, aes(x = rep_total, y = FAduration)) +
   geom_col (fill = "skyblue") +
   labs(title = "Persi False Alert Duration Over Time (Repetitions)", x = "Repetition #", y = "False Alert Duration, Sum for Repetition")+
   xlim(0, 150)+ 
-  ylim(0, 115)
+  ylim(0, 115) + theme_classic()
 
 
 #Plots Madi number of false alerts and sum duration of false alerts
-plot4 <- ggplot(madi, aes(x = rep_total, y = Number.False.Alerts)) +
+plot3 <- ggplot(madi, aes(x = rep_total, y = Number.False.Alerts)) +
   geom_col (fill = "skyblue") +
-  labs(title = "Madi False Alerts Over Time (Repetitions)", x = "Repetition #", y = "# False Alerts")
+  labs(title = "Madi False Alerts Over Time (Repetitions)", x = "Repetition #", y = "# False Alerts") + theme_classic()
 
-plot5 <- ggplot(madi, aes(x = rep_total, y = FAduration)) +
+plot4 <- ggplot(madi, aes(x = rep_total, y = FAduration)) +
   geom_col (fill = "skyblue") +
   labs(title = "Madi False Alert Duration Over Time (Repetitions)", x = "Repetition #", y = "False Alert Duration, Sum for Repetition")+
-  ylim(0, 600)
+  ylim(0, 600) + theme_classic()
 
 #Number False Alerts per Negative Sample
 ggplot(doi_clean, aes(x = Negative.1, y = Number.False.Alerts)) +
   geom_col (fill = "skyblue") +
-  labs(title = "Number of False Alerts Per Negative Sample", x = "Sample", y = "Number of False Alerts")
+  labs(title = "Number of False Alerts Per Negative Sample", x = "Sample", y = "Number of False Alerts") + theme_classic()
 
 #########Explore falses data#########################################################
 #How many true alerts happened without a false alert before it
@@ -198,56 +213,69 @@ ggplot(doi_clean, aes(x = Negative.1, y = Number.False.Alerts)) +
 #How does one days events affect the next day
 
 
-plot3 <- ggplot(persi_falses, aes(x = false_id, y = FA_time)) +
+plot5 <- ggplot(persi_falses, aes(x = false_id, y = FA_time)) +
   geom_col (fill = "skyblue") +
   labs(title = "Persi False Alert Duration Over Time (Repetitions)", x = "False alert #", y = "False Alert Duration, per Individual False Alert")+
-  ylim(0, 115)
+  ylim(0, 115) + theme_classic()
 
 plot6 <- ggplot(madi_falses, aes(x = false_id, y = FA_time)) +
   geom_col (fill = "skyblue") +
   labs(title = "Madi False Alerts Over Time (Repetitions)", x = "False alert #", y = "False Alert Duration, per Individual False Alert")+
-  ylim(0, 600)
+  ylim(0, 600) + theme_classic()
 
-#Put above 6 charts into one grid
-install.packages("gridExtra")
-library(gridExtra)
-grid.arrange(plot1, plot2, plot3, plot4, plot5, plot6, nrow = 2, ncol = 3)
 
 ###Data by date
 #Madi
-ggplot(madi_date, aes(x = Date, y = falseperrep)) +
+plot7 <- ggplot(madi_date, aes(x = Date, y = falseperrep)) +
   geom_col (fill = "skyblue") +
-  labs(title = "Average Number of False Alerts per Repetition", x = "Date", y = "Sum False Alerts/Number of Reps")
+  labs(title = "Average Number of False Alerts per Repetition", x = "Date", y = "Sum False Alerts/Number of Reps") + theme_classic()
 
-ggplot(madi_date, aes(x = Date, y = FA_duration)) +
+plot8 <- ggplot(madi_date, aes(x = Date, y = FA_duration)) +
   geom_col (fill = "skyblue") +
-  labs(title = "Sum of False Alert Duration per Day", x = "Date", y = "False Alert Duration (seconds)")
+  labs(title = "Sum of False Alert Duration per Day", x = "Date", y = "False Alert Duration (seconds)") + theme_classic()
 
-ggplot(madi_date, aes(x = day, y = falseperrep)) +
+plot9 <- ggplot(madi_date, aes(x = day, y = falseperrep)) +
   geom_col (fill = "skyblue") +
-  labs(title = "Average Number of False Alerts per Repetition", x = "Day Number", y = "Sum False Alerts/Number of Reps")
+  labs(title = "False Alerts per Session", x = "Session", y = "Sum False Alerts/Number of Reps") + theme_classic()
 
-ggplot(madi_date, aes(x = day, y = FA_duration)) +
+plot10 <- ggplot(madi_date, aes(x = day, y = FA_duration)) +
   geom_col (fill = "skyblue") +
-  labs(title = "Sum of False Alert Duration per Day", x = "Day Number", y = "False Alert Duration (seconds)")
+  labs(title = "Sum of False Alert Duration per Session", x = "Session", y = "Duration (seconds)") + theme_classic()
 
 
 #Persi
-ggplot(persi_date, aes(x = Date, y = falseperrep)) +
+plot11 <- ggplot(persi_date, aes(x = Date, y = falseperrep)) +
   geom_col (fill = "skyblue") +
-  labs(title = "Average Number of False Alerts per Repetition", x = "Date", y = "Sum False Alerts/Number of Reps")
+  labs(title = "Average Number of False Alerts per Repetition", x = "Date", y = "Sum False Alerts/Number of Reps") + theme_classic()
 
-ggplot(persi_date, aes(x = Date, y = FA_duration)) +
+plot12 <- ggplot(persi_date, aes(x = Date, y = FA_duration)) +
   geom_col (fill = "skyblue") +
-  labs(title = "Sum of False Alert Duration per Day", x = "Date", y = "False Alert Duration (seconds)")
+  labs(title = "Sum of False Alert Duration per Day", x = "Date", y = "False Alert Duration (seconds)") + theme_classic()
 
-ggplot(persi_date, aes(x = day, y = falseperrep)) +
+plot13 <- ggplot(persi_date, aes(x = day, y = falseperrep)) +
   geom_col (fill = "skyblue") +
-  labs(title = "Average Number of False Alerts per Repetition", x = "Day Number", y = "Sum False Alerts/Number of Reps")
+  labs(title = "False Alerts per Session", x = "Session", y = "Sum False Alerts/Number of Reps") + theme_classic() + ylim(0, 3)
 
-ggplot(persi_date, aes(x = day, y = FA_duration)) +
+plot14 <- ggplot(persi_date, aes(x = day, y = FA_duration)) +
   geom_col (fill = "skyblue") +
-  labs(title = "Sum of False Alert Duration per Day", x = "Day Number", y = "False Alert Duration (seconds)")
+  labs(title = "Sum of False Alert Duration per Session", x = "Session", y = "False Alert Duration (seconds)") + theme_classic()
+
+
+#Put multiple charts into one grid
+install.packages("gridExtra")
+library(gridExtra)
+grid.arrange(plot13, plot14, nrow = 1, ncol = 2)
+
+
+##############Misses
+ggplot(persi_date, aes(x = day, y = misses)) +
+  geom_col (fill = "skyblue") +
+  labs(title = "Misses per Session", x = "Session", y = "Misses") + theme_classic() +ylim(0, 10)
+
+ggplot(madi_date, aes(x = day, y = misses)) +
+  geom_col (fill = "skyblue") +
+  labs(title = "Misses per Session", x = "Session", y = "Misses") + theme_classic() +ylim(0, 10)
+
 
 #######Poisson model#################################
 #I don't think a poisson fits due to independence; given subjects are learning over time, each event affects the likelihood of other events.

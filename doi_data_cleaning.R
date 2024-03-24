@@ -54,19 +54,6 @@ persi <- persi %>%
   mutate(FAduration = rowSums(select(., FA1..s.:FA8..s.), na.rm = TRUE))
 
 
-#####################Ideas from Hammer###############################################
-##### Limitation: duration was measured for false alerts but not true alerts
-###Break false alerts down so that each false alert is its own record with its own single duration
-###How many true alerts happened without a false alert before it
-###On any day, how does first, second, etc. false alerts impact others. ex on a day with 5 false alerts does duration decrease more than on a day with 2 false alerts
-#Bar chart - create ID of date and FA1, date and FA2, etc
-#Each day is a time scale - looking at memory consolidation (latent learning)
-#How does one days events affect the next day
-#Within subjects test
-#Should check in
-#Collect data on people in course. Be able to observe issues common within each breed
-
-
 #Create new datasets that break each FA into their own record
 #Madi
 # Exclude specified columns before reshaping
@@ -129,7 +116,7 @@ rm(persi_filtered)
 
 
 
-###Each day is a time scale - looking at memory consolidation#####################
+###Each day is a time scale - broken into sessions
 madi_date <- madi_falses %>%
   group_by(Date) %>%
   summarise(
@@ -176,7 +163,7 @@ cor.test(madi$rep_total, madi$FAduration)
 cor.test(persi$rep_total, persi$Number.False.Alerts)
 cor.test(persi$rep_total, persi$FAduration)
 
-#Plots Persi number of false alerts and sum duration of false alerts
+#Plots Persi number of false alerts by repetition and sum duration of false alerts
 library(ggplot2)
 plot1 <- ggplot(persi, aes(x = rep_total, y = Number.False.Alerts)) +
   geom_col (fill = "skyblue") +
@@ -191,7 +178,7 @@ plot2 <- ggplot(persi, aes(x = rep_total, y = FAduration)) +
   ylim(0, 115) + theme_classic()
 
 
-#Plots Madi number of false alerts and sum duration of false alerts
+#Plots Madi number of false alerts by repetition and sum duration of false alerts
 plot3 <- ggplot(madi, aes(x = rep_total, y = Number.False.Alerts)) +
   geom_col (fill = "skyblue") +
   labs(title = "Madi False Alerts Over Time (Repetitions)", x = "Repetition #", y = "# False Alerts") + theme_classic()
@@ -206,25 +193,20 @@ ggplot(doi_clean, aes(x = Negative.1, y = Number.False.Alerts)) +
   geom_col (fill = "skyblue") +
   labs(title = "Number of False Alerts Per Negative Sample", x = "Sample", y = "Number of False Alerts") + theme_classic()
 
-#########Explore falses data#########################################################
-#How many true alerts happened without a false alert before it
-#On any day, how does first, second, etc. false alerts impact others. ex on a day with 5 false alerts does duration decrease more than on a day with 2 false alerts
-#Bar chart - create ID of date and FA1, date and FA2, etc
-#How does one days events affect the next day
 
-
+#########Explore falses data (repetition)################################################
 plot5 <- ggplot(persi_falses, aes(x = false_id, y = FA_time)) +
   geom_col (fill = "skyblue") +
   labs(title = "Persi False Alert Duration Over Time (Repetitions)", x = "False alert #", y = "False Alert Duration, per Individual False Alert")+
-  ylim(0, 115) + theme_classic()
+  ylim(0, 80) + scale_x_continuous(breaks = seq(0, 160, by = 10)) +theme_classic()
 
 plot6 <- ggplot(madi_falses, aes(x = false_id, y = FA_time)) +
   geom_col (fill = "skyblue") +
   labs(title = "Madi False Alerts Over Time (Repetitions)", x = "False alert #", y = "False Alert Duration, per Individual False Alert")+
-  ylim(0, 600) + theme_classic()
+  ylim(0, 600) +  scale_x_continuous(breaks = seq(0, 110, by = 10)) + theme_classic()
 
 
-###Data by date
+###Data by date (session)
 #Madi
 plot7 <- ggplot(madi_date, aes(x = Date, y = falseperrep)) +
   geom_col (fill = "skyblue") +
@@ -241,7 +223,6 @@ plot9 <- ggplot(madi_date, aes(x = day, y = falseperrep)) +
 plot10 <- ggplot(madi_date, aes(x = day, y = FA_duration)) +
   geom_col (fill = "skyblue") +
   labs(title = "Sum of False Alert Duration per Session", x = "Session", y = "Duration (seconds)") + theme_classic()
-
 
 #Persi
 plot11 <- ggplot(persi_date, aes(x = Date, y = falseperrep)) +
@@ -267,7 +248,7 @@ library(gridExtra)
 grid.arrange(plot13, plot14, nrow = 1, ncol = 2)
 
 
-##############Misses
+##############Misses####################
 ggplot(persi_date, aes(x = day, y = misses)) +
   geom_col (fill = "skyblue") +
   labs(title = "Misses per Session", x = "Session", y = "Misses") + theme_classic() +ylim(0, 10)
@@ -277,22 +258,12 @@ ggplot(madi_date, aes(x = day, y = misses)) +
   labs(title = "Misses per Session", x = "Session", y = "Misses") + theme_classic() +ylim(0, 10)
 
 
-#######Poisson model#################################
-#I don't think a poisson fits due to independence; given subjects are learning over time, each event affects the likelihood of other events.
-
-# Fit a Poisson regression model
-poisson_model <- glm(falseperrep ~ day, data = madi_date, family = "poisson")
-
-# Summary of the Poisson regression model
-summary(poisson_model)
-
-# Predictions from the Poisson regression model
-predictions <- predict(poisson_model, type = "response")
 
 
 
 
-# Kayla finding average number of repetitions per session
+###Average number of repetitions per session
+#For reference within paper
 # first create a new column for session number
 doi_clean$session <- NA
 
@@ -307,15 +278,8 @@ for (i in 1:length(doi_clean$session)) {
   doi_clean$session[i] <- counter
 }
 
- # count number of repetitions within a session
+# count number of repetitions within a session
 reps_by_session <- count(doi_clean, session, name = "reps")
 
 # get summary stats
 summary(reps_by_session)
-
-#Here's another way -RH
-#This gets a slightly different answer because we had a few days where the dogs had more than 1 session per date - KF
-result <- madi %>%
-  group_by(Date) %>%
-  summarize(AverageValue = mean(Rep.Number, na.rm = TRUE))
-mean(result$AverageValue)

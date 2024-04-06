@@ -10,74 +10,371 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 ## Abstract
-Detection dogs are often expected to generalize recognition from training samples to wild samples while maintaining specificity to a given target category. Since dogs are often used to locate targets that are visually challenging to identify, their continued specificity is important in deployment. While best practices exist for training and maintaining specificity in detection dogs, little is known about regaining target specificity if false alerts occur frequently. This case study focuses on the training of two experienced conservation detection dogs, owned by Action for Cheetahs in Kenya, that were making consistent false alerts to off-target caracal (Caracal caracal) and leopard (Panthera pardus) scat samples during training to detect cheetah (Acinonyx jubatus) scats. Previous attempts to reduce false alerts in training, including no-reward markers and time-outs, had not reduced false alerts over time. Procedures for handling, acquisition, and storage of target and off-target samples were refined prior to implementing the extinction protocol. These two dogs were trained using an extinction procedure to reduce false alerts to caracal and leopard scats while maintaining sensitivity to novel cheetah scats. Both dogs exhibited an extinction burst within four training sessions, demonstrated by an increase and then decrease in the number and duration of false alerts. Following the initial extinction burst, both dogs performed fewer false alerts for the duration of the training program. All training was conducted by novice handlers from Action for Cheetahs in Kenya under the guidance of expert trainers in-situ in Samburu County, Kenya. Sessions were filmed and coded for false alerts, true alerts, and when possible, misses and correct dismissals. In line with best practices for early stages of detection dog training, most training was not performed blind to facilitate response times between the handler and the dog. In later stages, handlers were blind to scat locations. These results demonstrate that it is possible to reduce false alerts in operational detection dogs via extinction paired with systematic reinforcement of desired alert behavior. This case study also highlights the importance of record-keeping and careful handling protocols for training samples. 
+Detection dogs are often expected to generalize from training with specific training samples to recognizing wild samples while maintaining specificity to a given target category. Such specificity is critical because dogs are often used to locate targets that are difficult to identify visually. Little is known about how to regain target specificity when false alerts become frequent or established. This case study assessed the training of two experienced conservation dogs that consistently alerted to off-target caracal (Caracal caracal) and leopard (Panthera pardus) scat samples during training to detect cheetah (Acinonyx jubatus) scat. The dogs were trained using an extinction protocol consisting of the removal of reinforcement to reduce false alerts to caracal and leopard scats while maintaining sensitivity to cheetah scats. Previous attempts to reduce false alerts in training, including no-reward markers and time-outs, had failed to reduce false alerts over time. All training was conducted in-situ in Samburu County, Kenya, by novice local handlers under the guidance of additional expert trainers. Sessions were filmed and coded for false alerts, true alerts, and where possible, misses and correct dismissals. Within four training sessions, both dogs exhibited an extinction burst which was demonstrated by an increase and then decrease in both the number and duration of false alerts. They continued to make fewer false alerts for the remainder of the training program. These results demonstrate the ability to reduce false alerts in operational detection dogs via extinction coupled with systematic reinforcement of desired alert behavior. This case study also highlights the importance of record-keeping and careful handling protocols for training samples. This study represents the first publication on an extinction protocol to reduce false alerts in operational detection dogs.
 
 ## Introduction
-Conservation detection dogs are specially trained to sniff out odors related to conservation. They work similarly to bomb, drug, or Search and Rescue dogs – but instead of searching for accelerants, drugs, or missing people, they search for targets related to ecological research or conservation biology. Many targets are difficult for humans to see, find, or observe, but dogs can sniff out these data while remaining non-invasive, effective, and efficient (Grimm-Seyfarth et al., 2021). To find these targets, such as scat or carcasses, dogs learn to associate finding the target odor with a reward, such as their favorite food or toy.
-Action for Cheetahs in Kenya (ACK) is part of a non-profit organization that uses conservation detection dogs to sniff out cheetah scat. After the scat is found, it is sent to a lab where it can be analyzed to learn about cheetah health, populations, prey selection, and many more data points. It can be difficult for a human to differentiate between scat from cheetahs and scat from other predators. In past visual searches conducted by ACK staff, only 27 of 262 (10.3%) putative cheetah scats were confirmed by genetic analysis (Mutoro et al., 2022). 
- Because organizations must pay per sample that is analyzed, it is costly and inefficient to analyze samples that are not cheetah scat. ACK employs two conservation detection dogs, named Madi and Persi. They were previously trained to find cheetah scat, then sit in order to communicate to their human counterpart that they found a target. During training sessions, other non-target odors are sometimes presented to “proof” the dogs off of them. In other words, similar odors, such as scat from other cats or carnivores, are presented in order to teach and ensure that the dogs are alerting only to cheetah scat (the “target”) and not to “non-target” sources of odor. Some of these similar but non-target odors include scat from leopard, lion, and caracal. During practice searches in 2021, it was discovered that Madi and Persi were alerting to some of these non-target scats. It is unknown exactly when or how this began, but it is likely that they were rewarded for some time for finding these non-target scats.
+Conservation detection dogs are trained to detect and locate odors related to a specific conservation objective. They work similarly to bomb, drug, or search and rescue dogs but rather than search for accelerants, drugs, or missing people, they search for targets related to ecological research or conservation biology. Conservation detection dogs have been used to locate 408 animal, 42 plant, 26 fungi and six bacteria species (Grimm-Seyfarth et al., 2021). Past targets of the teams involved in this project highlight the potential target diversity of conservation detection dogs: bird and bat carcasses on wind farms, zebra mussels (Dreissena polymorpha) on boats, scat from 11 species including margay (Panthera wiedii) and Alexander Archipelago Wolf (Canis lupus ligoni), the locally invasive plant Dyer’s woad (Isatis tinctoria), and black-footed ferret (Mustela nigripes) presence. Many of these conservation targets are difficult for humans to locate or identify, but dogs can detect these data while remaining non-invasive, effective, and efficient (Grimm-Seyfarth et al., 2021). To find these targets, dogs learn to associate the detection of a target odor with a reward, such as their favorite food or toy.
+
+Action for Cheetahs in Kenya (ACK) is part of a non-profit organization that uses conservation detection dogs to locate wild cheetah scat in both anthropogenic landscapes and wildlife areas. The collected scats are often sent to the laboratory for subsequent analysis related to individual- and population-level cheetah health and prey selection (Mutoro et al., 2022). It can be difficult for humans to distinguish cheetah scat from that of other sympatric predators, as demonstrated by Mutoro et al., (2022) which found that only 27 of 262 (10.3%) putative cheetah scats collected during human-only searches belonged to cheetah. Since organizations and researchers generally pay laboratories for each sample, it is costly and inefficient to analyze samples that are not from the target species (DeMatteo et al., 2018). ACK employs two conservation detection dogs. The dogs were previously trained to find cheetah scat and sit in order to communicate to their human counterpart that they found a target. During training sessions, other non-target odors are sometimes presented to “proof” the dogs off of them. In other words, similar odors, such as scat from other cats or carnivores, are presented in order to teach and ensure that the dogs are alerting only to cheetah scat (the “target”) and not to “non-target” sources of odor. Similar but non-target odors include scat from leopard, lion, and caracal. During practice searches in 2021, it was discovered that both dogs were alerting to some of these non-target scats. It is unknown exactly when or how this began, but they were likely rewarded for alerting to these non-target scats at some point in the past. Due to staff turnover, training records that may have shed further light on the origins of this problem were unable to be located.
+
+Extinction is a learning process in which a conditioned response is weakened due to the removal of reinforcement (Dunsmoor et al., 2015). In humans, extinction serves as the foundation for exposure-based therapies in addiction and anxiety disorders (Dunsmoor et al., 2015). To give a salient example, ignoring a child’s whining or temper tantrum for an ice cream cone will eventually extinguish the whining behavior (Pryor 1999). On its own, extinction cannot produce a desired behavior - it can only reduce a less-desired behavior. Generally in dog training, extinction is therefore paired with reinforcement of a desired behavior (as described under differential reinforcement in Friedman 2009). In the whining child example, this may mean providing ice cream for specific good behaviors before whining occurs. Extinction protocols are difficult, if not impossible, to implement if the trainer does not control the reinforcer. Ignoring a dog who is barking at squirrels will not cause the behavior to decrease over time, because the reinforcer for that behavior was never human attention (Pryor 1999). Extinction is often preferred in dog training over punishment, especially when paired with differential reinforcement, due to ethical concerns over stress or frustration to the canine learner (Friedman, 2009).
+
+This case study follows the troubleshooting and training to systematically use an extinction protocol to reduce false alerts in two conservation detection dogs. The goal of the training was to ultimately progress from reduced false alerts in a tightly controlled training scenario to larger and more realistic training scenarios, including those in which ACK handlers were naive to the location and identity of each scat. This study highlights the necessity of training records, observation, and flexibility when working with the dynamic biological systems known as detection dogs. 
+
 
 ## Methods
 ### Subjects
-Two detection dogs owned and trained by ACK. Madi was a six-year-old male border collie/Rottweiler mix with roughly five years of experience as a cheetah scat detection dog, including during the National Cheetah Survey. Persi was a three-year-old female Belgian malinois with over two years of training completed. She had not yet been deployed in an operational capacity, largely due to the COVID-19 pandemic, but she had significant field trial experience. Over the years, the dogs had been exposed to many handlers, trainers, and training approaches. Both dogs were trained to sit and stare at a target scat when found.
-During this study, ACK staff included two novice dog handlers, hereafter handlers. Both were in their first professional role as dog handlers and trainers with less than six months of experience in this position. ACK staff were the primary trainers and data collectors. K9 Conservationists team members designed the protocol, hid the scats, and coded the videos. The K9 Conservationists team includes three trainers, hereafter trainers, each with at least 2 years of experience training detection dogs and with at least 5 years of experience professionally training dogs for a variety of applications. 
+Two detection dogs owned and trained by ACK were selected for this study. They included Madi, a six-year-old male Border Collie-Rottweiler mix with roughly five years of experience as a cheetah scat detection dog and Persi, a three-year-old female Belgian Malinois with over two years of training completed. She had not yet been deployed in an operational capacity, largely due to the COVID-19 pandemic, but she had significant field trial experience. Over the years, the dogs had been exposed to a variety of handlers, trainers, and training approaches. Both dogs were trained to sit and stare at a target scat when found.
 
-### Materials and Study Area
-Most training took place at two different training areas in the ACK field station in Meibae Community Conservancy, Samburu, Kenya. Area 1 was an open sandy area bordered by shrubs, roughly 10m x 20m, with cut-off 2L soda bottles partially buried in the sand. Scats could be placed inside of the 2L soda bottles or on the ground within the search area. Area 2 was roughly 20m x 25m with shrubs, two roughly perpendicular 30-cm deep gullies, rocks, and other vegetative matter sparsely mixed throughout the area. In both areas, rocks, shrubs, vegetative matter, and other camp materials were occasionally used to visually obscure scats. 
-	In later stages of training, the dogs were also trained in area or linear searches. These took place around camp in search areas measured in square meters (area search) or minutes walked down a road (linear search). Dogs were primarily trained off-leash, though later training introduced leash handling. Scat location in area searches was marked on a handheld GPS unit. The trainer walked to areas other than the scat placement and touched other items such as rocks or branches to reduce the likelihood of the dog tracking the assistant to the scat. Training sessions were recorded using mobile phones for analysis. 
+During this study, the ACK staff included two novice dog handlers, hereafter ‘handlers’. Both were in their first professional role as dog handlers and trainers with less than six months of experience in this position. ACK staff were the primary trainers and data collectors. As external consultants, the K9 Conservationists team members designed the extinction protocol, hid the scats, and coded the videos. This team included three trainers, hereafter ‘trainers’, each with at least two years of experience training detection dogs and with at least five years of experience professionally training dogs for a variety of applications. 
+
 
 ### History-Taking
-Prior to the commencement of any training protocol, the team conducted investigations into the history of the problem. Training record notebooks had been lost or contained incomplete notes. Similarly, organizational knowledge regarding the starting point of the off-target alerts was lost due to staff turnover. It was gathered that the dogs had been making off-target alerts for at least a few months. The ACK team handled off-target alerts in training with verbal redirection (“No, search on”), given in a neutral tone of voice. The goal of this approach was to function as a no-reward marker and reduce false alerts in the future. If the dog made a subsequent off-target alert, the training session was paused for a minimum of two minutes and the dog was returned to the kennel. Over several months of this approach, the number of false alerts per session had not noticeably decreased. The dogs had a very strong learning history of sitting and staring at their targets. The bulk of their recent training had focused on alert training rather than seeking and sourcing odor or discriminating between targets.
-	Following the Humane Hierarchy (Friedman 2009), it was confirmed that the dogs were not suffering from any health concerns that may impact their ability to perform the task, such as a respiratory illness that reduced their olfactory sensitivity. At this point, the team developed several potential explanations for the off-target alert behavior:
+Since subjects of this study were operational working dogs with extensive learning histories, it was necessary to conduct investigations into the dogs’ learning histories prior to the creation of any training protocol. This is considered best practice in the dog training industry to avoid the implementation of a training protocol that does not address the complexities of individual learning histories or environmental influences. This aided in hypothesis formation and led the team to attempt an extinction protocol rather than other potential training approaches. This process involved interviews with staff and a review of training records. Some training record notebooks had been lost due to staff turnover or contained incomplete notes. Similarly, some organizational knowledge regarding the starting date of the off-target alerts was lost due to staff turnover. It was gathered that the dogs had been making off-target alerts for at least three months.
 
-Samples were contaminated with the odor of plastic and/or each other due to storage in plastic containers and in close proximity to each other without odor-proof barriers (see Hallowell et al., 1997). Plastic containers were washed and re-used without remaining species-specific. Because plastic is odorous and odor-permeable, samples were likely cross-contaminated (Goss 2019). Furthermore, samples were air-dried in a closed room with off- and on-target samples only separated by approximately 1m. This increased the risk of cross-contamination.
-Caracal, leopard, and cheetah scat samples were so similar in odor profile that discrimination between the samples required additional, specialized training. A fundamental odor saliency issue was deemed unlikely due to the dogs’ history of discriminating between off-target and cheetah scats in field surveys and training. However, the dogs’ behavior was consistent with variable schedules of reinforcement for all scat samples rather than discriminating between two species. This may be a result of training always including exactly one target and exactly one off-target, creating a 2-alternate forced choice scenario.
-The handlers were inadvertently cueing the dogs to alert to off-target samples by inadvertently indicating their presence to the dog in a variation of the effect demonstrated in Lit 2011. In this case, rather than the handlers leading the dog to an off-target alert due to being misled by an experimenter, the handlers could be leading the dog to an off-target alert by hesitating or hovering near an off-target sample to see if the dog would make an error.
-The dogs had learned that the most expedient way to earn their reward was to alert to the first sample encountered, regardless of its odor profile, because the handler would give them feedback on their response immediately. We hypothesized that it was less cognitively challenging for the dogs to make a guess and adjust based on the response than it was for them to perform the discriminative task. Given that their chances of encountering the cheetah scat first were 50/50, it was more expedient to “guess.” 
+Before the start of this study, the ACK team handled off-target alerts in training with verbal redirection (“No, search on”), given in a neutral tone of voice. The goal of this approach was to function as a no-reward marker and reduce false alerts in the future. If the dog made a subsequent off-target alert, the training session was paused for a minimum of two minutes and the dog was returned to the kennel. Over several months of this approach, the number of false alerts per session had not noticeably decreased. Further in-person training with consultant Dr. Leopold Slotta-Bachmayr prior to the commencement of this study resulted in a promising reduction in false alerts in the training center in Nairobi, but this success was not resilient to context changes of new trainers, handlers, and location when the team relocated to the field station in Samburu (Slotta-Bachmayr 2024, personal communication). The dogs had a strong learning history of sitting and staring at their targets due to extensive training adapted from explosives detection dog protocols. The bulk of their recent training had focused on alert training, including the duration and precision of the dogs’ positioning.
 
-Given the limited time that the trainers had in Kenya (about 13 weeks total), it was determined that our approach would focus on sample acquisition and storage first, then an extinction protocol to address false alerts.
+Following the Humane Hierarchy (Friedman 2009), it was confirmed that the dogs were not suffering from any health concerns that may impact their ability to perform the task, such as a respiratory illness that reduced their olfactory sensitivity, prior to conducting any training. At this point, the team developed several, potentially co-occurring hypotheses regarding the causes of the off-target alerts:
 
-### Sample Acquisition
-To address the sample contamination concern, we started by disposing of all old samples and containers. All new samples were air-dried outdoors in designated on- and off-target areas separated by at least 10m. They were then placed in new containers and stored with at least 3 barriers between on- and off-target samples (eg, sample CH1-A inside of a plastic bag inside a plastic container for individual CH1 inside of a larger plastic container for all cheetah samples). Plastic bags and new plastic storage containers were used despite permeability and odor concerns with plastic due to the lack of availability of glass or mylar containers in rural Kenya (see Goss 2019 for a discussion on the downsides of plastic storage). All samples were handled with gloves and were discarded after 3 months of use or if contamination was suspected. Best practices support discarding and replacing samples more frequently, but this was not practical due to the limited availability of species-confirmed scat.
+  1. Cross-contamination. Samples were contaminated with the odor of plastic and/or each other due to storage in plastic containers and in close proximity to each other without odor-proof barriers (see Hallowell et al., 1997). Plastic containers were washed and reused without remaining species-specific. Because plastic is odorous and odor-permeable, samples were likely cross-contaminated (Goss 2019). Furthermore, samples were air-dried in a closed room with off- and on-target samples only separated by approximately 1m. This increased the risk of cross-contamination.
+  2. Saliency. Caracal, leopard, and cheetah scat samples were similar in odor profile such that discrimination between the samples required additional, specialized training. A fundamental odor saliency issue was deemed unlikely due to reported history of the dogs successfully discriminating between off-target and cheetah scats in field surveys and training. 
+  3. Inadvertent Cueing. The handlers were inadvertently cueing the dogs to alert to off-target samples by indicating their presence to the dog in a variation of the effect demonstrated in Lit (2011). In this case, rather than the handlers leading the dog to an off-target alert due to being misled by an experimenter, the handlers could be leading the dog to an off-target alert by hesitating or hovering near an off-target sample to see if the dog would make an error.
+  4. Guessing. The dogs had learned that the most expedient way to earn their reward was to alert to the first sample encountered, regardless of its odor profile, because the handler would give them feedback on their response immediately in the form of a no-reward marker. This led to the decision for handlers and trainers to not give any physical or verbal feedback to the dog, as the no-reward marker may have functioned as information to the dogs that reinforced the false alert behavior. It has been suggested (see Ford and Gadbois, 2024) that this type of error may be a result of training that includes exactly one target and exactly one off-target, creating a 2-alternative forced choice scenario. Given that their chances of encountering the cheetah scat first were 50/50, it was more expedient to “guess” by alerting to all scats than it was to discriminate between the scats. 
+  5. Over-emphasis on alert behavior. Recent training, with its heavy focus on the precision and duration of a sit-and-stare alert behavior, had biased the dogs towards performing that behavior in response to any scat rather than seeking and sourcing odor or discriminating between targets. This may be a non-contrived example of matching law (see Poling et al., 2011) in which the dogs preferentially performed the more-reinforced behavior of alert over the less-reinforced discrimination behavior. 
+
+We hypothesized that due to a combination of factors 4 and 5 it was more expedient for the dogs to make a guess and adjust based on the handler’s response than it was for them to perform the discriminative task, especially given the heavy reinforcement of the alert behavior. This hypothesis potentially explained why the no-reward marker was ineffective over time.
+
+Given the limited time that the trainers had in Kenya (about 13 weeks), it was determined that our approach would focus on sample acquisition and storage combined with an extinction protocol rather than systematically testing each hypothesis separately.
+
+### Materials and Study Area
+Most training took place at two different areas in the ACK field station in Meibae Community Conservancy, Samburu, Kenya (0.98333, 37.31667). Area 1 was an open sandy location bordered by shrubs, approximately 200m^2^, with cut-off 2L soda bottles partially buried in the sand. Trial scats would be placed inside of the 2L soda bottles or on the ground within the search area. Area 2 was roughly 500m^2^ with shrubs, two roughly perpendicular 30-cm deep gullies, rocks, and other vegetative matter sparsely mixed throughout the area. In both areas, rocks, shrubs, vegetative matter, and other camp materials were occasionally used to visually obscure scats. 
+
+To address the sample contamination concern, we started by disposing of all old samples and containers. All new samples were air-dried outdoors in designated on- and off-target areas separated by at least 10m. They were then placed in new containers and stored with at least 3 barriers between on- and off-target samples (eg, sample CH1-A inside of a plastic bag inside a plastic container for individual CH1 inside of a larger plastic container for all cheetah samples). Plastic bags and new plastic storage containers continued to be used despite permeability and odor concerns with plastic due to the lack of availability of glass or mylar containers in rural Kenya. For a discussion on the downsides of plastic storage, see Goss (2019). All samples were handled with gloves and were discarded after 3 months of use or if contamination was suspected. Best practices support discarding and replacing samples more frequently, but this was not practical due to the limited availability of species-confirmed scat.
+
 Scat bags were labeled and a reference sheet marked the scat identification code, species, individual, age, sex, source, date collected, and any notes regarding the sample.
 
-### Training Procedure
-The dogs were trained one at a time with an average of 4.84 repetitions per session (minimum 1, maximum 8, 51 sessions total). On a given repetition, the trainer first started the video recording from a mobile phone on a tripod. The trainer said out loud the date, time of day, samples used, dog, and handler and then placed out one cheetah scat sample and one off-target scat sample (leopard or caracal). The handler was instructed to stand on an X in the sand with their hands behind their back. 
-The handler and the trainer were not consistently blinded in training sessions. In testing, blinding or double-blinding is imperative to reduce the chance of “Clever Hans” effects. However, in realistic training scenarios, the handler often knows the location of the target to set up a search strategy appropriate for the level of expertise of the dog. It was important that our training strategy remain attainable for the ACK team in our absence and be repeatable for single-person detection dog outfits in the future, and therefore chose not to blind the handler. However, as training progressed to linear and area searches, the handler searched blind while the trainer followed (single-blind approach). Linear and area searches were conducted off-leash with the handler following at least 2m behind the dog, except for June 9 trials where leash handling was introduced.
-From the handler’s starting position, the dog was told to search and directed toward the search area with a single hand point. The handlers were instructed not to move or speak. The trainer used a handheld clicker to mark the moment that the dog performed its alert (sitting and staring at the target scat), and then the dog returned to the handler for toy play and praise. In the event of an off-target alert, both handler and trainer were to stay quiet and still until the dog dismissed the off-target scat and made a correct alert. Both handlers were warned of the concept of an extinction burst; that the intensity, duration, or number of false alerts would likely increase before decreasing (Muething et al., 2024).
-Based on the expert opinion of the trainer, some training repetitions strayed from this basic setup. In several instances (n=3, Persi), the dogs were exposed to a search area with only cheetah scat (no off-target scats) to ensure success. This was done after Persi had multiple false alerts to an off-target scat and then did not alert to any scats for a repetition, checking both species but not making a decision. In order to rebuild the alert, a few repetitions without an off-target scat were deemed necessary. Occasionally the trainer elected to click (mark) and reward the dog for sniffing the correct scat rather than waiting for a full alert (n= 2, Persi). A few repetitions also included handler errors on the timing or criteria of the click and were removed from the analysis (n=2, Madi). In one repetition Madi attempted to mouth the scat and was verbally corrected (the trainer said “ah-ah” loudly). The trainer interrupted one false alert for Madi, which lasted 600 seconds and Madi was starting to fall asleep. That repetition was followed by one successful repetition and the session ended early. See the full training records in Supplementary Materials. Persi overall received more training repetitions than Madi (Madi n=93, Persi n=145) partially due to an injury for Madi and partially due to her higher stamina and strong drive to work for her reinforcers. 
+### Extinction Training Protocol
+The dogs were trained one at a time. A repetition ended when the dog made a correct alert, the trainer clicked, and the handler delivered a reinforcer. A session ended when the dog was returned to the kennel. Training averaged 4.84 repetitions per session (range 1-8, with 51 sessions total). On a given session, the trainer first started the video recording from a mobile phone on a tripod. The trainer said out loud the date, time of day, samples used, dog, and handler and then placed out one cheetah scat sample and one off-target scat sample (leopard or caracal). The handler was instructed to stand on an X in the sand with their hands behind their back to reduce potential inadvertent cueing. 
+
+The handler and the trainer were not consistently blinded in training sessions. In testing, blinding or double-blinding is imperative to reduce the chance of “Clever Hans” effects (Pfungst and Rahn, 1911). However, in realistic training scenarios, the handler often knows the target's location to set up a search strategy appropriate for the level of expertise of the dog and to facilitate response times between the handler and the dog. It was important that our training strategy remain practical for the ACK team in our absence and be repeatable for single-person detection dog outfits in the future, and therefore we chose not to blind the handler in early training. However, as training progressed to linear and area searches, the handler searched blind while the trainer followed (single-blind approach). Linear and area searches were conducted off-leash with the handler following at least 2m behind the dog, except for June 9 trials where leash handling was introduced.
+
+From the handler’s starting position, the dog was told to search and directed toward the search area with a single hand point. The handlers were instructed not to move or speak. The trainer used a handheld clicker to mark the moment that the dog performed its alert (sitting and staring at the target scat), and then the dog returned to the handler for toy play. In the event of an off-target alert, both handler and trainer were to stay quiet and still until the dog dismissed the off-target scat and made a correct alert. Both handlers were warned of the concept of an extinction burst; that the intensity, duration, or number of false alerts would likely increase before decreasing (Katz and Lattal 2021; Muething et al., 2024).
+
+Based on the expert opinion of the trainer, some training repetitions strayed from this basic setup. This is common in the training of operational dogs outside of the laboratory and reflects the dynamic nature of these protocols. 
+
+Persi’s modifications primarily addressed her initial response to extinguish all alert behaviors to all species, not just off-target samples. In two early repetitions, the trainer elected to click (mark) and reward Persi for sniffing the correct scat rather than waiting for a full alert. Following a single repetition in which Persi made 8 false alerts and 5 incorrect dismissals, a few repetitions without an off-target scat available were deemed necessary. The goal for these three repetitions was to rebuild Persi’s speed and confidence in correct alerts. For 3 subsequent repetitions, trainers provided Persi with a setup where only cheetah scats were present to eliminate the possibility of a false alert. 
+
+In one repetition Madi attempted to mouth the scat and was verbally corrected (the trainer said “ah-ah” loudly). The trainer interrupted one false alert for Madi, which lasted 600 seconds and Madi was starting to fall asleep. That repetition was followed by one successful repetition and the session ended early. See the full training records in Supplementary Materials. 
+
+A few repetitions also included handler errors on the timing or criteria of the click and were removed from the analysis (n=2, Madi). Persi overall received more training repetitions than Madi (Madi n=93, Persi n=145) due to an injury sustained by Madi and due to Persi’s higher stamina and strong drive to work for her reinforcers. 
+
+### Continued Training
+In later stages of training to ensure that extinction was generalized and risk of spontaneous recovery was mitigated (Broomer and Bouton, 2022), the dogs were also trained in area or linear searches. These took place around camp in search areas measured in square meters (area search) or minutes walked down a road (linear search). Dogs were primarily trained off-leash, though later training introduced leash handling. Scat location in area searches was marked on a handheld GPS unit. The trainer walked to areas other than the scat placement and touched other items such as rocks or branches to reduce the likelihood of the dog tracking the assistant to the scat. Training sessions were recorded using mobile phones for analysis. In other late training sessions, the trainer also placed multiple off-target samples in a single search to determine the dogs’ ability to dismiss multiple off-targets before encountering a cheetah sample. The number and extent of these training sessions was limited by the trainers’ remaining time in Kenya. 
 
 ### Video Analysis
 The trainers coded all videos of sessions for correct and false alert numbers and duration to prepare for the next training session. For video coding purposes and analysis, the following definitions were used:
-<br>
 
-```{r echo = FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+>  Correct Alert - The dog sits at the cheetah scat.
+  
+>  False Alert - The dog sits at a non-cheetah scat. If the dog takes steps away and then returns, count as a separate false alert. Readjusting a sit, standing and staring, and other interactions with a scat during an alert event all count as one alert until the dog steps away; then count as a separate alert if the dog returns.
+  
+>  Correct Dismissal - The dog sniffs a non-cheetah scat and does not alert. The dog's nose must drop to indicate sniffing; passing by without a sniff is not a dismissal.
+  
+>  Miss - The dog sniffs a cheetah scat without alerting. If the dog never checks a scat (runs right past it or never approaches), that is NOT marked as a miss.
+  
+>  False Alert Duration - The duration in seconds from when a dog sits to when a dog takes steps away from a scat. Mark the freeze-frame when the dog is in half-sit at the start and end of an alert. Count as the end of an alert if after standing the dog steps away from the scat. If the dog readjusts its sit or continues to stand at a scat, count seconds until the dog actually leaves the scat as one alert.
 
-#install.packages("knitr")
-library(knitr)
 
-data <- data.frame(
-  "Correct Alert" = "The dog sits at the cheetah scat",
-  "False Alert" = "The dog sits at a non-cheetah scat. If the dog takes steps away and then returns, count as a separate false alert. Readjusting a sit, standing and staring, and other interactions with a scat during an alert event all count as one alert until the dog steps away; then count as a separate alert if the dog returns.",
-  "Correct Dismissal" = "The dog sniffs a non-cheetah scat and does not alert. The dog's nose must drop to indicate sniffing; passing by without a sniff is not a dismissal.",
-  "Miss" = "The dog sniffs a cheetah scat without alerting. If the dog never checks a scat (runs right past it or never approaches), that is NOT marked as a miss.",
-  "False Alert Duration" = "The duration in seconds from when a dog sits to when a dog takes steps away from a scat. Mark the freeze-frame when the dog is in half-sit at the start and end of an alert. Count as the end of an alert if after standing the dog steps away from the scat. If the dog readjusts its sit or continues to stand at a scat, count seconds until the dog actually leaves the scat as one alert."
-)
-
-# Print the table using kable
-kable(data, format = "pandoc")
-
-```
-<br>
 
 For an example video of Persi making a false alert and then hearing a click at the moment of a correct alert, please see the Supplementary Materials.
-	Trainers reviewed video and used timestamps and the definitions above to determine the training program progress and assess the plan for the next day. 
+
+Trainers reviewed video, coded results in a spreadsheet, and used timestamps and the definitions above to determine the training program progress and assess the plan for the next day. 
 
 ### Data Analysis
-The extinction protocol explained above was utilized from May 9 - June 7. Training with the teams continued after June 7, however methods changed in order to progress training, so the analysis is primarily limited to before June 7. A brief summary of results from continued training is also included. Data was cleaned and analyzed using R. A link to the repository can be found in Supplementary Materials.
+The extinction protocol explained above was utilized from May 9 - June 7, 2023. Training with the teams continued after June 7, 2023 however methods changed in order to progress training, so the analysis is primarily limited to before June 7, 2023. A summary of results from continued training is also included in Results, below. Data was cleaned and analyzed using R version 4.3.3 (R Core Team, 2024). A link to the repository can be found in Supplementary Materials.
+
+Original data included repetitions n = 98 Madi and n = 149 Persi. Records were removed if true alerts did not contain a value (n = 1 Madi), no opportunity for a false alert was available (n = 3 Madi, n = 4 Persi), or no opportunity for a true alert was available (n = 1 Madi). Because training sessions could not always be completed on a regular schedule, sessions were converted from date to ordinal numbers. 
 
 ## Results
-Utilizing the extinction methodology, both dogs showed decreased numbers and durations of false alerts over time. It was expected that each dog would experience an extinction burst (Muething et al., 2024), then show decreased false alerts. False alerts were measured in quantity by number and in duration by seconds and can be shown over time by day (session) or repetition number. One session consisted of multiple repetitions. Because sessions were not consistent over time, dates were converted to ordinal numbers called session number.
+Utilizing this protocol, both dogs showed decreased numbers and durations of false alerts over time. Between the dates of May 9 and June 7 2022, Persi underwent 15 training sessions, which contained a total of 145 repetitions (Figures 1, 2, 3, and 4). Between the dates of 9 May 2022 and 7 June 2022, Madi underwent 12 training sessions, which contained a total of 93 repetitions (Figures 5, 6, 7, and 8). All results are based on video analysis of training conducted. 
 
-Between the dates of May 9 and June 7 2022, Persi underwent 15 days of training, which contained a total of 149 repetitions. Figure 1 shows the number of false alerts per repetition by Persi over the course of sessions (each session consisting of 1-8 repetitions).
+```{r include = FALSE}
+setwd("C:/Documents/K9C/DOI Paper")
+doi_clean <- read.csv("doi_data_clean.csv")
+library(tidyverse)
+library(dplyr)
+library(tidyr)
+library(ggplot2)
+
+#coercing Date column to date
+doi_clean$Date <- as.Date(doi_clean$Date, format = "%m/%d/%Y")
+class(doi_clean$Date)
+class(doi_clean$Dog)
+
+#coerce false alerts, correct dismissals, misses to numeric
+doi_clean$Number.False.Alerts <- as.numeric(doi_clean$Number.False.Alerts)
+doi_clean$X..of.correct.dismissals <- as.numeric(doi_clean$X..of.correct.dismissals)
+doi_clean$X..of.misses <- as.numeric(doi_clean$X..of.misses)
+
+# split into two dataframes based on dog learner
+madi <- filter(doi_clean, Dog == "Madi")
+persi <- filter(doi_clean, Dog == "Persi")
+
+# remove row with nulls
+madi <- filter(madi, Number.True.Alerts != "NA")
+persi <- filter(persi, Number.True.Alerts != "NA")
+
+# remove rows (training reps) where there was no opportunity
+# for false alert (no negatives available)
+madi <- filter(madi, Negative.1 != "none")
+persi <- filter(persi, Negative.1 != "none")
+
+# remove rows (training reps) where there was no opportunity
+# for true alert (no cheetah available)
+madi <- filter(madi, Cheetah != "none")
+persi <- filter(persi, Cheetah != "none")
+
+#Add column FAduration as sum of false alerts
+madi <- madi %>%
+  mutate(FAduration = rowSums(select(., FA1..s.:FA8..s.), na.rm = TRUE))
+persi <- persi %>%
+  mutate(FAduration = rowSums(select(., FA1..s.:FA8..s.), na.rm = TRUE))
+
+# add row for training repetition number overall
+madi$rep_total <- seq(1, length.out = nrow(madi))
+persi$rep_total <- seq(1, length.out = nrow(persi))
+
+#Create new datasets that break each FA into their own record
+#Madi
+# Exclude specified columns before reshaping
+madi_filtered <- madi[, !grepl("^FAduration$|^Number.True.Alerts$|^Number.False.Alerts$|^X..of.correct.dismissals$|^X..of.misses$", colnames(madi))]
+
+
+# Reshape the dataframe using pivot_longer
+madi_falses <- pivot_longer(madi_filtered, 
+                              cols = starts_with("FA"), 
+                              names_to = "FA", 
+                              values_to = "FA_time")
+
+# Replace NA values in FA_time with 0 where FA is FA1..s.
+madi_falses$FA_time[madi_falses$FA == "FA1..s." & is.na(madi_falses$FA_time)] <- 0
+
+# Remove rows where FA_time is NA
+madi_falses <- madi_falses[complete.cases(madi_falses), ]
+
+madi_falses$FA <- gsub("FA", "", madi_falses$FA)
+madi_falses$FA <- gsub("\\.\\.s\\.$", "", madi_falses$FA)
+madi_falses$FA <- as.numeric(madi_falses$FA)
+
+
+#Persi
+# Exclude specified columns before reshaping
+persi_filtered <- persi[, !grepl("^FAduration$|^Number.True.Alerts$|^Number.False.Alerts$|^X..of.correct.dismissals$|^X..of.misses$", colnames(persi))]
+
+# Reshape the dataframe using pivot_longer
+persi_falses <- pivot_longer(persi_filtered, 
+                             cols = starts_with("FA"), 
+                             names_to = "FA", 
+                             values_to = "FA_time")
+
+# Replace NA values in FA_time with 0 where FA is FA1..s.
+persi_falses$FA_time[persi_falses$FA == "FA1..s." & is.na(persi_falses$FA_time)] <- 0
+
+# Remove rows where FA_time is NA
+persi_falses <- persi_falses[complete.cases(persi_falses), ]
+
+# Change values in the FA column
+persi_falses$FA <- gsub("FA", "", persi_falses$FA)
+persi_falses$FA <- gsub("\\.\\.s\\.$", "", persi_falses$FA)
+persi_falses$FA <- as.numeric(persi_falses$FA)
+
+#Add new column to where value is 1 if that repetition was completed without any false alerts, 0 when false alerts were recorded.
+madi_falses <- madi_falses %>%
+  mutate(no_false = ifelse(FA_time == 0, 1, 0))
+persi_falses <- persi_falses %>%
+  mutate(no_false = ifelse(FA_time == 0, 1, 0))
+
+#Add numbers for unique false alert identifiers
+madi_falses$false_id <- seq(from = 1, to = nrow(madi_falses))
+persi_falses$false_id <- seq(from = 1, to = nrow(persi_falses))
+
+
+#Remove filtered tables to keep data environment cleaner
+rm(madi_filtered)
+rm(persi_filtered)
+
+
+#Add no false to madi and persi
+madi <- madi %>%
+  mutate(no_false = ifelse(FAduration == 0, 1, 0))
+persi <- persi %>%
+  mutate(no_false = ifelse(FAduration == 0, 1, 0))
+
+madi_date <- madi %>%
+  group_by(Date) %>%
+  summarise(
+    repetitions = n(),
+    FA_duration = sum(FAduration),
+    num_false_alerts = sum(ifelse(no_false == 1, 0, 1))
+  )
+madi_date$falseperrep <- madi_date$num_false_alerts / madi_date$repetitions
+madi_date$day <- seq_len(nrow(madi_date))
+
+
+persi_date <- persi %>%
+  group_by(Date) %>%
+  summarise(
+    repetitions = n(),
+    FA_duration = sum(FAduration),
+    num_false_alerts = sum(ifelse(no_false == 1, 0, 1))
+  )
+persi_date$falseperrep <- persi_date$num_false_alerts / persi_date$repetitions
+persi_date$day <- seq_len(nrow(persi_date))
+
+#######Add misses to _date dataframes
+madi_misses <- madi %>%
+  group_by(Date) %>%
+  summarise(misses = sum(X..of.misses, na.rm = TRUE))
+
+madi_date <- merge(madi_date, madi_misses, by = "Date", all.x = TRUE)
+
+persi_misses <- persi %>%
+  group_by(Date) %>%
+  summarise(misses = sum(X..of.misses, na.rm = TRUE))
+
+persi_date <- merge(persi_date, persi_misses, by = "Date", all.x = TRUE)
+
+rm(madi_misses)
+rm(persi_misses)
+
+```
+
+```{r echo=FALSE, message=FALSE}
+
+ggplot(persi_date, aes(x = day, y = falseperrep)) +
+  geom_col (fill = "skyblue") +
+  geom_smooth(method = "lm", se = FALSE, color = "red") +
+  labs(title = "Persi False Alerts per Session", x = "Session", y = "Sum False Alerts/Number of Reps") + theme_classic() +
+  scale_x_continuous(breaks = 1:15, labels = as.character(1:15))
+```
+
+
+Figure 1. Persi's proportion of false alerts per session.
+
+
+```{r echo=FALSE, message=FALSE}
+
+ggplot(persi_date, aes(x = day, y = FA_duration/repetitions)) +
+  geom_col (fill = "skyblue") +
+  labs(title = "Persi Sum of False Alert Duration per Session", x = "Session", y = "Sum False Alert Duration (seconds)/Number of Reps") + theme_classic()+
+  scale_x_continuous(breaks = 1:15, labels = as.character(1:15))
+
+```
+
+
+Figure 2. Persi's duration of false alerts per session.
+
+Sessions 1 and 2 show an extinction burst, followed by decreased false alerts. After session 11, Persi exhibits no more false alerts.
+
+
+```{r echo=FALSE, message=FALSE}
+
+ggplot(persi_falses, aes(x = false_id, y = FA_time)) +
+  geom_col (fill = "skyblue") +
+  labs(title = "Persi False Alert Duration Over Time (Repetitions)", x = "False alert #", y = "False Alert Duration, per Individual False Alert") +
+  theme_classic() +
+  scale_x_continuous(breaks = c(1, seq(6, 156, by = 6)))  
+
+```
+
+
+Figure 3. Persi’s false alert duration in seconds for each false alert. If a repetition contained multiple false alerts, the duration of each false alert is shown individually. If there were no false alerts in a repetition, that repetition is shown as one record of a duration of 0. 
+
+
+```{r echo=FALSE, message=FALSE}
+ggplot(persi_date, aes(x = day, y = misses/repetitions)) +
+  geom_col (fill = "skyblue") +
+  labs(title = "Persi Misses per Session", x = "Session", y = "Misses/Number of Reps") + theme_classic() +
+  scale_x_continuous(breaks = 1:15, labels = as.character(1:15))
+
+
+```
+
+Figure 4. Persi's misses per session.
+
+
+```{r echo=FALSE, message=FALSE}
+
+ggplot(madi_date, aes(x = day, y = falseperrep)) +
+  geom_col (fill = "skyblue") +
+  geom_smooth(method = "lm", se = FALSE, color = "red") +
+  labs(title = "Madi False Alerts per Session", x = "Session", y = "Sum False Alerts/Number of Reps") + theme_classic()+
+  scale_x_continuous(breaks = 1:12, labels = as.character(1:12))
+
+
+```
+
+Figure 5. Madi's proportion of false alerts per session.
+
+```{r echo=FALSE, message=FALSE}
+
+ggplot(madi_date, aes(x = day, y = FA_duration)) +
+  geom_col (fill = "skyblue") +
+  labs(title = "Madi Sum of False Alert Duration per Session", x = "Session", y = "Sum False Alert Duration (seconds)") + theme_classic()+
+  scale_x_continuous(breaks = 1:12, labels = as.character(1:12))
+
+```
+
+Figure 6. Madi’s sum duration of false alerts in seconds per training session.
+
+```{r echo=FALSE, message=FALSE}
+
+ggplot(madi_falses, aes(x = false_id, y = FA_time)) +
+  geom_col (fill = "skyblue") +
+  labs(title = "Madi False Alerts Over Time (Repetitions)", x = "False alert #", y = "False Alert Duration, per Individual False Alert")+
+  ylim(0, 600) +  scale_x_continuous(breaks = seq(0, 110, by = 10)) + theme_classic()
+
+
+```
+
+
+Figure 7. Madi’s false alert duration in seconds for each false alert. If a repetition contains multiple false alerts, the duration of each false alert is shown individually. If there were no false alerts in a repetition, that repetition is shown as one record of a duration of 0. 
+
+
+While Madi continues to have occasional false alerts, the duration significantly decreases over time.
+
+```{r echo=FALSE, message=FALSE}
+
+ggplot(madi_date, aes(x = day, y = misses/repetitions)) +
+  geom_col (fill = "skyblue") +
+  labs(title = "Madi Misses per Session", x = "Session", y = "Misses/Number of Reps") + theme_classic() +
+  scale_x_continuous(breaks = 1:12, labels = as.character(1:12))
+
+```
+
+Figure 8. Madi’s Misses per Session.
+
+
+
+Later training sessions were aimed at generalizing the dogs’ ability to perform accurately in more realistic search scenarios. On June 9, both Madi and Persi underwent 2 sessions with 5 repetitions per session. The only variation from the previous protocol was that the dogs were on leash. The handler followed behind them, allowing the dog to guide the search. Persi had 4 correct dismissals during these 10 repetitions and alerted correctly each repetition. Madi had 2 correct dismissals, and alerted correctly each repetition.
+
+On June 16, both Madi and Persi underwent 1 session. Persi had 10 repetitions, and Madi had 9. Various negative samples were introduced over Persi’s repetitions until her final repetition contained 4 negative samples and 1 cheetah. She had no false alerts and alerted correctly with each repetition. She did not have any dismissals, which could be due to a variety of reasons. She may have encountered cheetah every time before encountering any negatives, or more likely, dismissed any negatives before getting close enough to them for trainers to interpret as a dismissal given our highly conservative definition of dismissal.
+Madi’s first repetition did not contain any negative samples, as trainers wanted to ensure a successful setup. He had 4 repetitions where 2 negative samples were present. He had 2 correct dismissals, no false alerts, and alerted correctly each time. He then had 2 repetitions with 2 negative samples, which he correctly dismissed both times and alerted correctly. On his 8th repetition, he dismissed 2 negative samples 4 times, and had 1 miss. The handler then clicked for sniff and ended the repetition. His 9th repetition had no negative samples, clicked for sniff, then ended the session.
+
+## Discussion
+Our study confirmed that an extinction protocol can reduce false alerts in detection dogs. Within just four training sessions each, both dogs exhibited an extinction burst of increased number or duration of false alerts, followed by a reduction in the number and duration of false alerts. This reduction in false alerts remained consistent as the search scale increased and handlers began to work blind. The protocol described was easily carried out by just two people within the span of 12 days and 12 sessions totaling 93 repetitions (Madi) or 15 days and 15 sessions totaling 145 repetitions (Persi). 
+
+This training protocol also maintained target species sensitivity, meaning that there was no increase in misses, even with samples that the dogs were exposed to for the first time later in training (Figs. 4 and 8, see Supplementary Materials for sample references). Early in training, Persi demonstrated an increase in misses that was quickly remedied through three repetitions with only cheetah scat present. This minor adjustment underscores the importance of flexibility and responsiveness in a training protocol for detection dogs; blindly following a progression plan without taking data on the dog’s response may create entirely new problems for the team. Maintaining sensitivity was a reason the team opted for an extinction protocol rather than punishment of false alerts. Literature in rats (see Broomer and Bouton, 2022) suggests that extinction may progress more slowly than punishment and that extinguished responses are reacquired more quickly. It is therefore tempting to consider a punishment-based approach for dealing with false alerts. However, punishment is generally avoided in detection training due to the perceived risk of reducing sensitivity by creating an aversion to seeking, sniffing, alerting, or otherwise approaching potential targets. For this reason, we did not punish the dogs’ responses to caracal or leopard scats. 
+
+It is worth noting that neither of the dogs exhibited significant pawing at or mouthing of scats as part of their extinction burst. Both dogs demonstrated that their first response to a withheld reinforcer was to either alert longer, alert again, or to continue searching. This is likely due to a long history of training the dogs to hold length, very precise alerts, as reported by the ACK team. The K9 Conservationists team has observed in student and mentorship groups that detection dogs with different learning histories and personalities may default to disturbing samples much more frequently than Madi and Persi. Dogs demonstrating this response to extinction would benefit from other modifications to this training plan, again underscoring the importance of flexibility and observation when working with detection dogs.
+
+There are multiple limitations to this study, due to sample size, study duration, and the lack of detailed prior records to the dogs’ training. We were unable to evaluate the relationship between handler and training success due to scheduling conflicts with handlers and overall sample size, though handlers can have a substantial effect on detection dog performance (Lit et al., 2011 and Jamieson et al., 2018). We were also unable to evaluate the effect of different samples, such as sample quality or species, on the dogs’ success due to the lack of independence and small sample size. For example, most of Persi’s false alerts (n=15 out of 28 false alerts total, 53.6%) occurred using scat CA1 (see Supplementary Materials) , but 8 of those false alerts were during a single repetition that corresponded to her extinction burst. New samples were introduced over time, and we expect alert frequency and duration to change due to the learning process, so the effect of individual samples cannot be evaluated independently. Further study with larger sample sizes and time scale would be required to investigate whether specific samples were more likely to trigger false alerts than others. We did not investigate the duration of correct alerts. This would be difficult to study without introducing extinction to positive targets, but would provide valuable information. Trainers gradually extend the duration of correct alerts from nearly immediate reinforcement by clicking as the dog’s rear legs bent into a sit to alerts of 3-5 seconds to confirm that the dogs did not abandon correct alerts with minor delays in reinforcement, but this was not measured.
+
+The dogs did not respond to training uniformly. Madi’s results overall are less clear, as he continued to perform some false alerts throughout the entire training period. Madi is three years older and has three years more experience than Persi. He has worked through many more trainers and training protocols. Each of these factors could potentially contribute to a longer extinction process. Extinction is slower when training involves reinforcement of only some responses (Trailkill et al., 2016). When detection dogs are being prepared for field deployments, trainers often transition from continuous to intermittent reinforcement (DeChant 2021). This insulates the dogs’ training from extinction if a trainer decides not to reinforce an unconfirmable alert (eg., a drug dog alerts to a gas cap that must be dismantled before confirming the presence of drugs) (DeChant 2021). For Madi, field deployments involving the intermittent reinforcement of cheetah scat may have delayed the success of our extinction protocol with caracal and leopard scat, as it took more training repetitions for him to differentiate between intermittent reinforcement and extinction. Furthermore, Madi is described as “lower drive” than Persi, meaning that he is less exclusively focused on his toy or food reinforcement. This may make the withholding of reinforcement less salient to him as part of the extinction protocol. All of these potential explanations would require separate investigations to confirm.
+
+Punished and extinguished responses may be equally likely to return following a change of context (Broomer and Bouton, 2022). This study concluded after just over one month due to logistical restrictions for the trainers, leaving us unable to confirm that this protocol remained successful over time and context changes. We would expect ongoing training, especially during context changes, to be necessary to maintain target species specificity for these dogs. More research is needed to determine the factors that influence the long-term success of extinction, no-reward markers, errorless learning, or punishment to reduce false alerts. 
+
+Specificity for conservation detection dogs is key to their utility to locate and identify biological samples. The costs of false alerts include lost time in the field and increased analytical costs due to the processing of off-target samples (DeMatteo et al., 2018). Given the already high cost of the detection dog method and limited conservation dollars, it is imperative that conservation dog trainers and handlers work to maintain target species sensitivity (Grimm-Seyfarth et al., 2021 and Waldron et al., 2013). Despite this importance, little has been published on best practices to maintain specificity for detection dogs. To our knowledge, the present study is the first to investigate a protocol to recover specificity after it has been diminished. 
+
+
+## Literature Cited

@@ -29,10 +29,6 @@ doi_clean$X..of.misses <- as.numeric(doi_clean$X..of.misses)
 madi <- filter(doi_clean, Dog == "Madi")
 persi <- filter(doi_clean, Dog == "Persi")
 
-# add row for training repetition number overall
-madi$rep_total <- seq(1, length.out = nrow(madi))
-persi$rep_total <- seq(1, length.out = nrow(persi))
-
 # remove row with nulls
 madi <- filter(madi, Number.True.Alerts != "NA")
 persi <- filter(persi, Number.True.Alerts != "NA")
@@ -53,6 +49,9 @@ madi <- madi %>%
 persi <- persi %>%
   mutate(FAduration = rowSums(select(., FA1..s.:FA8..s.), na.rm = TRUE))
 
+# add row for training repetition number overall
+madi$rep_total <- seq(1, length.out = nrow(madi))
+persi$rep_total <- seq(1, length.out = nrow(persi))
 
 #Create new datasets that break each FA into their own record
 #Madi
@@ -114,25 +113,28 @@ rm(madi_filtered)
 rm(persi_filtered)
 
 
+#Add no false to madi and persi
+madi <- madi %>%
+  mutate(no_false = ifelse(FAduration == 0, 1, 0))
+persi <- persi %>%
+  mutate(no_false = ifelse(FAduration == 0, 1, 0))
 
-
-###Each day is a time scale - broken into sessions
-madi_date <- madi_falses %>%
+madi_date <- madi %>%
   group_by(Date) %>%
   summarise(
-    repetitions = max(Rep.Number),
-    FA_duration = sum(FA_time),
+    repetitions = n(),
+    FA_duration = sum(FAduration),
     num_false_alerts = sum(ifelse(no_false == 1, 0, 1))
   )
 madi_date$falseperrep <- madi_date$num_false_alerts / madi_date$repetitions
 madi_date$day <- seq_len(nrow(madi_date))
 
 
-persi_date <- persi_falses %>%
+persi_date <- persi %>%
   group_by(Date) %>%
   summarise(
-    repetitions = max(Rep.Number),
-    FA_duration = sum(FA_time),
+    repetitions = n(),
+    FA_duration = sum(FAduration),
     num_false_alerts = sum(ifelse(no_false == 1, 0, 1))
   )
 persi_date$falseperrep <- persi_date$num_false_alerts / persi_date$repetitions

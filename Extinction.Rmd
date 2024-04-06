@@ -259,7 +259,9 @@ ggplot(persi_date, aes(x = day, y = falseperrep)) +
 ```
 
 
-Figure 1. Persi's proportion of false alerts per session.
+Figure 1. Persi's sum number of false alerts per repetition per session.
+
+During sessions 1 and 2, Persi's extinction burst is exhibited by multiple false alerts. Her number of false alerts decreased over time, and she had no false alerts after session 11.
 
 
 ```{r echo=FALSE, message=FALSE}
@@ -272,9 +274,9 @@ ggplot(persi_date, aes(x = day, y = FA_duration/repetitions)) +
 ```
 
 
-Figure 2. Persi's duration of false alerts per session.
+Figure 2. Persi's average duration in seconds of false alerts per repetition per session.
 
-Sessions 1 and 2 show an extinction burst, followed by decreased false alerts. After session 11, Persi exhibits no more false alerts.
+Sessions 1 and 2 include false alerts with high duration, followed by decreased false alerts. When Persi does false alert, the durations are significantly decreased. After session 11, Persi exhibits no more false alerts.
 
 
 ```{r echo=FALSE, message=FALSE}
@@ -290,6 +292,8 @@ ggplot(persi_falses, aes(x = false_id, y = FA_time)) +
 
 Figure 3. Persi’s false alert duration in seconds for each false alert. If a repetition contained multiple false alerts, the duration of each false alert is shown individually. If there were no false alerts in a repetition, that repetition is shown as one record of a duration of 0. 
 
+There is no set number of repetitions that will induce extinction of  behavior, and many factors can affect behavior change and the learning process for an individual. However, there is a clear drop in both presence of and duration of false alerts after about 30 false alerts.
+
 
 ```{r echo=FALSE, message=FALSE}
 ggplot(persi_date, aes(x = day, y = misses/repetitions)) +
@@ -300,7 +304,9 @@ ggplot(persi_date, aes(x = day, y = misses/repetitions)) +
 
 ```
 
-Figure 4. Persi's misses per session.
+Figure 4. Persi's number of misses per number of repetitions per session.
+
+It is important to ensure that dogs maintain sensitivity and do not cease to alert to cheetah scat. Persi initially exhibits what could be an increase in misses. Repetitions that include only cheetah scat can be utilized in order to ensure the dog has an opportunity to obtain reinforcement for a true alert.
 
 
 ```{r echo=FALSE, message=FALSE}
@@ -314,7 +320,9 @@ ggplot(madi_date, aes(x = day, y = falseperrep)) +
 
 ```
 
-Figure 5. Madi's proportion of false alerts per session.
+Figure 5. Madi's sum number of false alerts per repetition per session.
+
+Madi's number of false alerts decreases over time, however he continues to have occasional false alerts.
 
 ```{r echo=FALSE, message=FALSE}
 
@@ -326,6 +334,8 @@ ggplot(madi_date, aes(x = day, y = FA_duration)) +
 ```
 
 Figure 6. Madi’s sum duration of false alerts in seconds per training session.
+
+Despite continuing to have occasional false alerts, their duration significantly decreases over time.
 
 ```{r echo=FALSE, message=FALSE}
 
@@ -340,8 +350,7 @@ ggplot(madi_falses, aes(x = false_id, y = FA_time)) +
 
 Figure 7. Madi’s false alert duration in seconds for each false alert. If a repetition contains multiple false alerts, the duration of each false alert is shown individually. If there were no false alerts in a repetition, that repetition is shown as one record of a duration of 0. 
 
-
-While Madi continues to have occasional false alerts, the duration significantly decreases over time.
+After one especially persistent false alert of 600 seconds (10 minutes), the duration of Madi's false alerts significantly decrease.
 
 ```{r echo=FALSE, message=FALSE}
 
@@ -352,7 +361,10 @@ ggplot(madi_date, aes(x = day, y = misses/repetitions)) +
 
 ```
 
-Figure 8. Madi’s Misses per Session.
+Figure 8. Madi’s number of misses per repetition per session.
+
+(ADD INTERPRETATION OF MADI's MISSES)
+
 
 
 

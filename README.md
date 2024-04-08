@@ -1,5 +1,5 @@
 # README for Using Extinction to Reduce False Alerts in Cheetah Scat Detection Dogs
-Code and data for Fratt K., Nootbaar H., Burak M., Mutoro N., and Hamre R., Using Extinction to Reduce False Alerts in Cheetah Scat Detection Dogs. 
+Code and data for Fratt K., Hamre R., Nootbaar H., Burak M., Mutoro N., and Wykstra M., Using Extinction to Reduce False Alerts in Cheetah Scat Detection Dogs. 
 
 # Supplementary Materials Guide
 doi_data_clean.csv is the partially cleaned data from our study. This was manually cleaned to remove notes, asterisks, and comments. 

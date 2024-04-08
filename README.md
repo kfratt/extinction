@@ -6,7 +6,7 @@ doi_data_clean.csv is the partially cleaned data from our study. This was manual
 
 data_cleaning.R shows the process to clean and standardize the data and create figures.
 
-#Training Videos
+# Training Videos
 Select videos of the training process can be seen at https://www.youtube.com/playlist?list=PL2f3Dgh0Fg_l9Q0nACphbSajCvMFm1eRG
 
 The video titled "May 11 2022 ACK Training Session" is a complete training session showing handler Edwin working with Persi and Madi while author/trainer Kayla assists.

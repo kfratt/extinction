@@ -252,7 +252,7 @@ rm(persi_misses)
 ggplot(persi_date, aes(x = day, y = falseperrep)) +
   geom_col (fill = "skyblue") +
   geom_smooth(method = "lm", se = FALSE, color = "red") +
-  labs(title = "Persi False Alerts per Session", x = "Session", y = "Sum False Alerts/Number of Reps") + theme_classic() +
+  labs(x = "Session", y = "False Alert Rate") + theme_classic() +
   scale_x_continuous(breaks = 1:15, labels = as.character(1:15))
 ```
 
@@ -266,7 +266,8 @@ During sessions 1 and 2, Persi's extinction burst was exhibited by multiple fals
 
 ggplot(persi_date, aes(x = day, y = FA_duration/repetitions)) +
   geom_col (fill = "skyblue") +
-  labs(title = "Persi Sum of False Alert Duration per Session", x = "Session", y = "Sum False Alert Duration (seconds)/Number of Reps") + theme_classic()+
+  labs(#title = "Persi Sum of False Alert Duration per Session",
+    x = "Session", y = "Average False Alert Duration (seconds) ") + theme_classic()+
   scale_x_continuous(breaks = 1:15, labels = as.character(1:15))
 
 ```
@@ -281,9 +282,10 @@ Sessions 1 and 2 included false alerts with high duration, followed by decreased
 
 ggplot(persi_falses, aes(x = false_id, y = FA_time)) +
   geom_col (fill = "skyblue") +
-  labs(title = "Persi False Alert Duration Over Time (Repetitions)", x = "False alert #", y = "False Alert Duration, per Individual False Alert") +
+  labs(#title = "Persi False Alert Duration Over Time",
+       x = "False alert #", y = "False Alert Duration (seconds) ") +
   theme_classic() +
-  scale_x_continuous(breaks = c(1, seq(6, 156, by = 6)))  
+  scale_x_continuous(breaks = c(0, seq(10, 156, by = 10)))
 
 ```
 
@@ -296,7 +298,8 @@ There was a drop in both presence of and duration of false alerts after about 30
 ```{r echo=FALSE, message=FALSE}
 ggplot(persi_date, aes(x = day, y = misses/repetitions)) +
   geom_col (fill = "skyblue") +
-  labs(title = "Persi Misses per Session", x = "Session", y = "Misses/Number of Reps") + theme_classic() +
+  labs(#title = "Persi Misses per Session",
+    x = "Session", y = "Miss Rate") + theme_classic() +
   scale_x_continuous(breaks = 1:15, labels = as.character(1:15))
 
 
@@ -311,7 +314,8 @@ Figure 4. Persi's number of misses per number of repetitions per session.
 ggplot(madi_date, aes(x = day, y = falseperrep)) +
   geom_col (fill = "skyblue") +
   geom_smooth(method = "lm", se = FALSE, color = "red") +
-  labs(title = "Madi False Alerts per Session", x = "Session", y = "Sum False Alerts/Number of Reps") + theme_classic()+
+  labs(#title = "Madi False Alerts per Session",
+       x = "Session", y = "False Alert Rate") + theme_classic()+
   scale_x_continuous(breaks = 1:12, labels = as.character(1:12))
 
 
@@ -325,12 +329,27 @@ Madi's number of false alerts decreased over time, however he continued to have 
 
 ggplot(madi_date, aes(x = day, y = FA_duration)) +
   geom_col (fill = "skyblue") +
-  labs(title = "Madi Sum of False Alert Duration per Session", x = "Session", y = "Sum False Alert Duration (seconds)") + theme_classic()+
+  labs(#title = "Madi Sum of False Alert Duration per Session",
+       x = "Session", y = "Sum False Alert Duration (seconds)") + theme_classic()+
   scale_x_continuous(breaks = 1:12, labels = as.character(1:12))
 
 ```
 
-Figure 6. Madi’s sum duration of false alerts in seconds per training session.
+Figure 6?. Madi’s sum duration of false alerts in seconds per training session.
+
+```{r echo=FALSE, message=FALSE}
+
+ggplot(madi_date, aes(x = day, y = FA_duration/repetitions)) +
+  geom_col (fill = "skyblue") +
+  labs(#title = "Madi Sum of False Alert Duration per Session",
+       x = "Session", y = "Average False Alert Duration (seconds)") + theme_classic()+
+  scale_x_continuous(breaks = 1:12, labels = as.character(1:12))+
+  ylim(0, 80)
+
+```
+Figure 6. Madi's average duration of false alert. This varies greatly from the sum duration (above) because of the 600 second alert, which took place as the only false alert among 8 trials, so when averaged, appears to be an average of 75 seconds.
+
+
 
 Despite continuing to have occasional false alerts, Madi's duration decreased over time (Figure 6).
 
@@ -338,7 +357,8 @@ Despite continuing to have occasional false alerts, Madi's duration decreased ov
 
 ggplot(madi_falses, aes(x = false_id, y = FA_time)) +
   geom_col (fill = "skyblue") +
-  labs(title = "Madi False Alerts Over Time (Repetitions)", x = "False alert #", y = "False Alert Duration, per Individual False Alert")+
+  labs(#title = "Madi False Alerts Over Time (Repetitions)",
+    x = "False alert #", y = "False Alert Duration (seconds) ")+
   ylim(0, 600) +  scale_x_continuous(breaks = seq(0, 110, by = 10)) + theme_classic()
 
 
@@ -353,7 +373,8 @@ After one especially persistent false alert of 600 seconds (10 minutes), the dur
 
 ggplot(madi_date, aes(x = day, y = misses/repetitions)) +
   geom_col (fill = "skyblue") +
-  labs(title = "Madi Misses per Session", x = "Session", y = "Misses/Number of Reps") + theme_classic() +
+  labs(#title = "Madi Misses per Session",
+    x = "Session", y = "Miss Rate") + theme_classic() +
   scale_x_continuous(breaks = 1:12, labels = as.character(1:12))
 
 ```
